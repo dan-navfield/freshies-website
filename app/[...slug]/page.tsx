@@ -1,5 +1,5 @@
 import { getStoryblokApi } from "@/lib/storyblok";
-import { StoryblokComponent } from "@storyblok/react";
+import StoryblokPage from "@/components/StoryblokPage";
 
 export default async function Page({ params }: { params: { slug: string[] } }) {
     let slug = params.slug ? params.slug.join("/") : "home";
@@ -9,23 +9,39 @@ export default async function Page({ params }: { params: { slug: string[] } }) {
 
     return (
         <div>
-            <StoryblokComponent blok={data.story.content} />
+            <StoryblokPage story={data.story} />
         </div>
     );
 }
 
 export async function generateStaticParams() {
     const storyblokApi = getStoryblokApi();
-    let { data } = await storyblokApi.get("cdn/links", {
-        version: "draft",
-    });
+    try {
+        let { data } = await storyblokApi.get("cdn/links", {
+            version: "draft",
+        });
 
-    let paths: { slug: string[] }[] = [];
-    Object.keys(data.links).forEach((linkKey) => {
-        if (!data.links[linkKey].is_folder && data.links[linkKey].slug !== "home") {
-            paths.push({ slug: data.links[linkKey].slug.split("/") });
+        // Safety check for invalid response
+        if (!data || !data.links) {
+            return [];
         }
-    });
 
-    return paths;
+        let paths: { slug: string[] }[] = [];
+
+        // Use standard for...in loop or assert type to avoid Object.keys issues with undefined
+        const links = data.links as Record<string, any>;
+
+        Object.keys(links).forEach((linkKey) => {
+            const link = links[linkKey];
+            if (!link.is_folder && link.slug !== "home") {
+                paths.push({ slug: link.slug.split("/") });
+            }
+        });
+
+        return paths;
+    } catch (e) {
+        // Fallback for build time if API fails or token is invalid
+        console.error("Error generating static params:", e);
+        return [];
+    }
 }
