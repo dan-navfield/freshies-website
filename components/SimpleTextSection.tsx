@@ -20,7 +20,7 @@ const SimpleTextSection = ({ blok }: { blok: any }) => {
                 {blok.cta_text && (
                     <Button
                         size="lg"
-                        variant={blok.background === 'purple' ? 'secondary' : 'default'}
+                        variant={blok.background === 'purple' ? 'secondary' : undefined}
                         className="min-w-[200px]"
                     >
                         {blok.cta_text}
