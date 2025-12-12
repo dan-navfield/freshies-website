@@ -5,18 +5,18 @@ import Page from "@/components/Page";
 import Teaser from "@/components/Teaser";
 import Grid from "@/components/Grid";
 import Feature from "@/components/Feature";
-import FeatureHero from "./FeatureHero";
-import TwoColFeature from "./TwoColFeature";
-import FeatureScores from "./FeatureScores";
-import ProfileShowcase from "./ProfileShowcase";
-import SimpleTextSection from "./SimpleTextSection";
-import HomeHero from "./HomeHero";
-import HomeHowItWorks from "./HomeHowItWorks";
-import HomeAudienceSplit from "./HomeAudienceSplit";
-import HomeIngredientSafety from "./HomeIngredientSafety";
-import HomeFeatureHighlights from "./HomeFeatureHighlights";
-import HomeMission from "./HomeMission";
-import HomeFinalCta from "./HomeFinalCta";
+import FeatureHero from "@/components/FeatureHero";
+import TwoColFeature from "@/components/TwoColFeature";
+import FeatureScores from "@/components/FeatureScores";
+import ProfileShowcase from "@/components/ProfileShowcase";
+import SimpleTextSection from "@/components/SimpleTextSection";
+import HomeHero from "@/components/HomeHero";
+import HomeHowItWorks from "@/components/HomeHowItWorks";
+import HomeAudienceSplit from "@/components/HomeAudienceSplit";
+import HomeIngredientSafety from "@/components/HomeIngredientSafety";
+import HomeFeatureHighlights from "@/components/HomeFeatureHighlights";
+import HomeMission from "@/components/HomeMission";
+import HomeFinalCta from "@/components/HomeFinalCta";
 
 const components = {
     page: Page,
