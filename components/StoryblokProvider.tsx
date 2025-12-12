@@ -17,6 +17,10 @@ import HomeIngredientSafety from "@/components/HomeIngredientSafety";
 import HomeFeatureHighlights from "@/components/HomeFeatureHighlights";
 import HomeMission from "@/components/HomeMission";
 import HomeFinalCta from "@/components/HomeFinalCta";
+import HeroSection from "@/components/blocks/HeroSection";
+import ContentSection from "@/components/blocks/ContentSection";
+import FeatureGrid from "@/components/blocks/FeatureGrid";
+import CtaSection from "@/components/blocks/CtaSection";
 
 const components = {
     page: Page,
@@ -35,6 +39,10 @@ const components = {
     home_feature_highlights: HomeFeatureHighlights,
     home_mission: HomeMission,
     home_final_cta: HomeFinalCta,
+    hero_section: HeroSection,
+    content_section: ContentSection,
+    feature_grid: FeatureGrid,
+    cta_section: CtaSection,
 };
 
 storyblokInit({
