@@ -21,6 +21,7 @@ import HeroSection from "@/components/blocks/HeroSection";
 import ContentSection from "@/components/blocks/ContentSection";
 import FeatureGrid from "@/components/blocks/FeatureGrid";
 import CtaSection from "@/components/blocks/CtaSection";
+import InteractiveFeatureShowcase from "@/components/blocks/InteractiveFeatureShowcase";
 
 const components = {
     page: Page,
@@ -43,6 +44,7 @@ const components = {
     content_section: ContentSection,
     feature_grid: FeatureGrid,
     cta_section: CtaSection,
+    interactive_feature_showcase: InteractiveFeatureShowcase,
 };
 
 storyblokInit({

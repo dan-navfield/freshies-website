@@ -11,11 +11,12 @@ export default function HeroSection({ blok }: { blok: any }) {
 
     // Theme classes
     const themeClasses = {
-        light: "bg-ballet-pink/30",
+        light: "bg-surface-sand",
+        peach: "bg-surface-sand",
         dark: "bg-deep-purple text-white",
         gradient_blue: "bg-gradient-to-br from-electric-blue/10 to-transparent",
         gradient_purple: "bg-gradient-to-br from-deep-purple to-ultraviolet text-white",
-    }[blok.background_theme as string] || "bg-white";
+    }[blok.background_theme as string] || "bg-surface-sand";
 
     return (
         <section

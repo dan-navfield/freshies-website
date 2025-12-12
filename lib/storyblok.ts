@@ -18,6 +18,7 @@ import HeroSection from "@/components/blocks/HeroSection";
 import ContentSection from "@/components/blocks/ContentSection";
 import FeatureGrid from "@/components/blocks/FeatureGrid";
 import CtaSection from "@/components/blocks/CtaSection";
+import InteractiveFeatureShowcase from "@/components/blocks/InteractiveFeatureShowcase";
 import { storyblokInit, apiPlugin } from "@storyblok/react";
 
 export const getStoryblokApi = storyblokInit({
@@ -49,5 +50,6 @@ export const getStoryblokApi = storyblokInit({
         content_section: ContentSection,
         feature_grid: FeatureGrid,
         cta_section: CtaSection,
+        interactive_feature_showcase: InteractiveFeatureShowcase,
     },
 });
