@@ -43,7 +43,7 @@ storyblokInit({
     components,
 });
 
-console.log("StoryblokProvider: Registered components:", Object.keys(components));
+
 
 
 export default function StoryblokProvider({ children }: { children: React.ReactNode }) {
