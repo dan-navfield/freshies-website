@@ -28,9 +28,9 @@ const homeAlt2Content = {
             component: "content_section",
             headline: "Skincare shouldn’t be confusing or stressful.",
             body: "Kids and teens are exposed to more skincare products than ever. Ingredients lists are hard to read, trends change fast, and it’s not always clear what’s actually safe for developing skin. Parents want clarity. Kids want independence. Freshies is built to support both.",
-            layout: "center_text",
+            layout: "split_left",
             background_color: "neutral",
-            visual_element: "none"
+            visual_element: "ingredient_confusion"
         },
         // 3. Feature Overview (Interactive Grid with Preview on Top)
         {

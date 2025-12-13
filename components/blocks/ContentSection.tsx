@@ -175,6 +175,41 @@ export default function ContentSection({ blok }: { blok: any }) {
                                 </div>
                             )}
 
+                            {/* Ingredient Confusion (Special) */}
+                            {blok.visual_element === 'ingredient_confusion' && (
+                                <div className="relative py-12 px-6">
+                                    {/* Central Product Silhouette */}
+                                    <div className="relative mx-auto w-32 h-48 bg-white border-2 border-gray-100 rounded-[2rem] shadow-xl flex items-center justify-center mb-8 z-10">
+                                        <div className="text-center">
+                                            <div className="w-16 h-16 bg-gray-50 rounded-full mx-auto mb-2" />
+                                            <div className="h-2 w-12 bg-gray-100 rounded-full mx-auto" />
+                                        </div>
+                                    </div>
+
+                                    {/* Floating Confusing Tags */}
+                                    <div className="absolute top-0 right-0 animate-bounce duration-[4000ms]">
+                                        <div className="bg-coral/10 text-coral px-4 py-2 rounded-full text-sm font-bold shadow-sm transform rotate-6 border border-coral/20">
+                                            Parabens?
+                                        </div>
+                                    </div>
+                                    <div className="absolute top-10 left-0 animate-bounce duration-[3000ms] delay-500">
+                                        <div className="bg-ultraviolet/10 text-ultraviolet px-4 py-2 rounded-full text-sm font-bold shadow-sm transform -rotate-3 border border-ultraviolet/20">
+                                            Sulfates...
+                                        </div>
+                                    </div>
+                                    <div className="absolute bottom-12 right-4 animate-bounce duration-[3500ms] delay-200">
+                                        <div className="bg-gray-100 text-gray-500 px-4 py-2 rounded-full text-sm font-bold shadow-sm transform -rotate-2">
+                                            Fragrance?
+                                        </div>
+                                    </div>
+                                    <div className="absolute bottom-20 left-4 animate-bounce duration-[4500ms] delay-700">
+                                        <div className="bg-gray-800 text-white px-3 py-3 rounded-full text-lg font-bold shadow-lg transform rotate-12">
+                                            ???
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
                         </div>
                     )}
 
