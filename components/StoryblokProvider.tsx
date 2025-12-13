@@ -22,6 +22,11 @@ import ContentSection from "@/components/blocks/ContentSection";
 import FeatureGrid from "@/components/blocks/FeatureGrid";
 import CtaSection from "@/components/blocks/CtaSection";
 import InteractiveFeatureShowcase from "@/components/blocks/InteractiveFeatureShowcase";
+import StatsSection from "@/components/blocks/StatsSection";
+import PricingTable from "@/components/blocks/PricingTable";
+import TestimonialCarousel from "@/components/blocks/TestimonialCarousel";
+import ProcessTimeline from "@/components/blocks/ProcessTimeline";
+import FeatureTabItem from "@/components/blocks/FeatureTabItem";
 
 const components = {
     page: Page,
