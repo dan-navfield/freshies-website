@@ -45,6 +45,11 @@ const components = {
     feature_grid: FeatureGrid,
     cta_section: CtaSection,
     interactive_feature_showcase: InteractiveFeatureShowcase,
+    stats_section: StatsSection,
+    pricing_table: PricingTable,
+    testimonial_carousel: TestimonialCarousel,
+    process_timeline: ProcessTimeline,
+    feature_tab_item: FeatureTabItem,
 };
 
 storyblokInit({

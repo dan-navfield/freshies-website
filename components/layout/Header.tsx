@@ -27,6 +27,9 @@ export function Header() {
                     <Link href="/about" className="text-sm font-medium text-deep-purple hover:text-ultraviolet transition-colors">
                         About
                     </Link>
+                    <Link href="/partners" className="text-sm font-medium text-deep-purple hover:text-ultraviolet transition-colors">
+                        For Brands
+                    </Link>
                     <Link href="/home-alt" className="text-sm font-medium text-deep-purple hover:text-ultraviolet transition-colors bg-ultraviolet/5 px-3 py-1 rounded-full">
                         Concept 1
                     </Link>
