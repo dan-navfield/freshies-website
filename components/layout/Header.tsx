@@ -28,7 +28,10 @@ export function Header() {
                         About
                     </Link>
                     <Link href="/home-alt" className="text-sm font-medium text-deep-purple hover:text-ultraviolet transition-colors bg-ultraviolet/5 px-3 py-1 rounded-full">
-                        Home Alt
+                        Concept 1
+                    </Link>
+                    <Link href="/home-alt-2" className="text-sm font-medium text-deep-purple hover:text-ultraviolet transition-colors bg-ultraviolet/5 px-3 py-1 rounded-full">
+                        Concept 2
                     </Link>
                 </nav>
 
