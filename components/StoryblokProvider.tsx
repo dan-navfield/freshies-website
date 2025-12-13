@@ -27,6 +27,7 @@ import PricingTable from "@/components/blocks/PricingTable";
 import TestimonialCarousel from "@/components/blocks/TestimonialCarousel";
 import ProcessTimeline from "@/components/blocks/ProcessTimeline";
 import FeatureTabItem from "@/components/blocks/FeatureTabItem";
+import ValuesSection from "@/components/blocks/ValuesSection";
 
 const components = {
     page: Page,
@@ -55,6 +56,7 @@ const components = {
     testimonial_carousel: TestimonialCarousel,
     process_timeline: ProcessTimeline,
     feature_tab_item: FeatureTabItem,
+    values_section: ValuesSection,
 };
 
 storyblokInit({
