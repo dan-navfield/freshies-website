@@ -26,6 +26,9 @@ import { LearnIngredients } from "@/components/learn/LearnIngredients";
 import { LearnAppConnect } from "@/components/learn/LearnAppConnect";
 import { LearnCta } from "@/components/learn/LearnCta";
 import { LearnTrust } from "@/components/learn/LearnTrust";
+import { IngredientPage } from "@/components/learn/ingredients/IngredientPage";
+import { GuidePage } from "@/components/learn/guides/GuidePage";
+import { TrendPage } from "@/components/learn/trends/TrendPage";
 import { storyblokInit, apiPlugin } from "@storyblok/react";
 
 export const getStoryblokApi = storyblokInit({
@@ -66,5 +69,8 @@ export const getStoryblokApi = storyblokInit({
         learn_app_connect: LearnAppConnect,
         learn_cta: LearnCta,
         learn_trust: LearnTrust,
+        ingredient_page: IngredientPage,
+        guide_page: GuidePage,
+        trend_page: TrendPage,
     },
 });

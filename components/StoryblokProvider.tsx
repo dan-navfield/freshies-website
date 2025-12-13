@@ -41,6 +41,9 @@ import { LearnArticleCard } from "@/components/learn/LearnArticleCard";
 import { LearnIngredientItem } from "@/components/learn/LearnIngredientItem";
 import { LearnStepItem } from "@/components/learn/LearnStepItem";
 import { LearnTrustItem } from "@/components/learn/LearnTrustItem";
+import { IngredientPage } from "@/components/learn/ingredients/IngredientPage";
+import { GuidePage } from "@/components/learn/guides/GuidePage";
+import { TrendPage } from "@/components/learn/trends/TrendPage";
 
 const components = {
     page: Page,
@@ -85,6 +88,9 @@ const components = {
     learn_ingredient_item: LearnIngredientItem,
     learn_step_item: LearnStepItem,
     learn_trust_item: LearnTrustItem,
+    ingredient_page: IngredientPage,
+    guide_page: GuidePage,
+    trend_page: TrendPage,
 };
 
 storyblokInit({

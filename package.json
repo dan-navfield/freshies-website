@@ -29,6 +29,7 @@
     "eslint-config-next": "16.0.8",
     "local-ssl-proxy": "^2.0.5",
     "tailwindcss": "^4",
+    "tailwindcss-animate": "^1.0.7",
     "typescript": "^5"
   }
 }
