@@ -21,7 +21,7 @@ async function checkContent() {
             console.log(`Found story summary: ${summary.name} (ID: ${summary.id})`);
 
             // GET FULL STORY CONTENT (List view often excludes 'content')
-            const fullRes = await Storyblok.get(`spaces/${SPACE_ID}/stories/${summary.id}`);
+            const fullRes = await Storyblok.get(`spaces/${SPACE_ID}/stories/${summary.id}`, { version: "draft" });
             const story = fullRes.data.story;
 
             if (!story.content) {

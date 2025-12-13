@@ -133,6 +133,48 @@ export default function ContentSection({ blok }: { blok: any }) {
                                 </div>
                             )}
 
+                            {/* Routine Checklist (Special) */}
+                            {blok.visual_element === 'routine_checklist' && (
+                                <div className="relative bg-white p-8 rounded-[2rem] shadow-2xl skew-y-1">
+                                    <div className="flex items-center justify-between mb-8">
+                                        <h3 className="text-xl font-bold text-deep-purple">Morning Routine</h3>
+                                        <div className="bg-mint/20 text-mint-dark px-3 py-1 rounded-full text-sm font-bold">4/4</div>
+                                    </div>
+                                    <div className="space-y-4">
+                                        {[1, 2, 3, 4].map((i) => (
+                                            <div key={i} className="flex items-center gap-4 p-4 rounded-xl bg-gray-50 border border-gray-100">
+                                                <div className="w-6 h-6 rounded-full bg-mint flex items-center justify-center text-white">
+                                                    <Check className="w-4 h-4" />
+                                                </div>
+                                                <div className="h-2 bg-gray-200 rounded-full w-24" />
+                                                <div className="ml-auto h-2 bg-gray-100 rounded-full w-8" />
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Shelf (Special) */}
+                            {blok.visual_element === 'shelf_display' && (
+                                <div className="relative pt-10">
+                                    <div className="relative z-10 grid grid-cols-2 gap-4 px-8">
+                                        <div className="aspect-square bg-white rounded-xl shadow-lg border border-gray-100 p-4 transform -rotate-2">
+                                            <div className="w-full h-full bg-ultraviolet/10 rounded-lg flex items-center justify-center text-ultraviolet font-bold text-2xl">A</div>
+                                        </div>
+                                        <div className="aspect-square bg-white rounded-xl shadow-lg border border-gray-100 p-4 transform rotate-3 translate-y-4">
+                                            <div className="w-full h-full bg-mint/10 rounded-lg flex items-center justify-center text-mint-dark font-bold text-2xl">B</div>
+                                        </div>
+                                    </div>
+                                    <div className="h-4 bg-gray-200 rounded-full mt-4 -mx-4 relative z-0 shadow-inner" />
+                                    <div className="relative z-10 grid grid-cols-2 gap-4 px-8 mt-2">
+                                        <div className="aspect-square bg-white rounded-xl shadow-lg border border-gray-100 p-4 transform rotate-1">
+                                            <div className="w-full h-full bg-coral/10 rounded-lg flex items-center justify-center text-coral font-bold text-2xl">C</div>
+                                        </div>
+                                    </div>
+                                    <div className="h-4 bg-gray-200 rounded-full mt-4 -mx-4 relative z-0 shadow-inner" />
+                                </div>
+                            )}
+
                         </div>
                     )}
 
