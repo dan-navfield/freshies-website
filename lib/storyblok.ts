@@ -19,6 +19,13 @@ import ContentSection from "@/components/blocks/ContentSection";
 import FeatureGrid from "@/components/blocks/FeatureGrid";
 import CtaSection from "@/components/blocks/CtaSection";
 import InteractiveFeatureShowcase from "@/components/blocks/InteractiveFeatureShowcase";
+import { LearnHero } from "@/components/learn/LearnHero";
+import { LearnCategories } from "@/components/learn/LearnCategories";
+import { LearnFeatured } from "@/components/learn/LearnFeatured";
+import { LearnIngredients } from "@/components/learn/LearnIngredients";
+import { LearnAppConnect } from "@/components/learn/LearnAppConnect";
+import { LearnCta } from "@/components/learn/LearnCta";
+import { LearnTrust } from "@/components/learn/LearnTrust";
 import { storyblokInit, apiPlugin } from "@storyblok/react";
 
 export const getStoryblokApi = storyblokInit({
@@ -51,5 +58,13 @@ export const getStoryblokApi = storyblokInit({
         feature_grid: FeatureGrid,
         cta_section: CtaSection,
         interactive_feature_showcase: InteractiveFeatureShowcase,
+        // Learn Page Components
+        learn_hero: LearnHero,
+        learn_categories: LearnCategories,
+        learn_featured: LearnFeatured,
+        learn_ingredients: LearnIngredients,
+        learn_app_connect: LearnAppConnect,
+        learn_cta: LearnCta,
+        learn_trust: LearnTrust,
     },
 });

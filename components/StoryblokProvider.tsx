@@ -28,6 +28,19 @@ import TestimonialCarousel from "@/components/blocks/TestimonialCarousel";
 import ProcessTimeline from "@/components/blocks/ProcessTimeline";
 import FeatureTabItem from "@/components/blocks/FeatureTabItem";
 import ValuesSection from "@/components/blocks/ValuesSection";
+import { LearnHero } from "@/components/learn/LearnHero";
+import { LearnCategories } from "@/components/learn/LearnCategories";
+import { LearnFeatured } from "@/components/learn/LearnFeatured";
+import { LearnIngredients } from "@/components/learn/LearnIngredients";
+import { LearnAppConnect } from "@/components/learn/LearnAppConnect";
+import { LearnCta } from "@/components/learn/LearnCta";
+import { LearnTrust } from "@/components/learn/LearnTrust";
+import { SimpleTextItem } from "@/components/learn/SimpleTextItem";
+import { LearnCategoryItem } from "@/components/learn/LearnCategoryItem";
+import { LearnArticleCard } from "@/components/learn/LearnArticleCard";
+import { LearnIngredientItem } from "@/components/learn/LearnIngredientItem";
+import { LearnStepItem } from "@/components/learn/LearnStepItem";
+import { LearnTrustItem } from "@/components/learn/LearnTrustItem";
 
 const components = {
     page: Page,
@@ -57,6 +70,21 @@ const components = {
     process_timeline: ProcessTimeline,
     feature_tab_item: FeatureTabItem,
     values_section: ValuesSection,
+    // Learn components
+    learn_hero: LearnHero,
+    learn_categories: LearnCategories,
+    learn_featured: LearnFeatured,
+    learn_ingredients: LearnIngredients,
+    learn_app_connect: LearnAppConnect,
+    learn_cta: LearnCta,
+    learn_trust: LearnTrust,
+    // Learn sub-components
+    simple_text_item: SimpleTextItem,
+    learn_category_item: LearnCategoryItem,
+    learn_article_card: LearnArticleCard,
+    learn_ingredient_item: LearnIngredientItem,
+    learn_step_item: LearnStepItem,
+    learn_trust_item: LearnTrustItem,
 };
 
 storyblokInit({
