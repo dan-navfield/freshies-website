@@ -12,8 +12,8 @@ export default function HomeHeroConcept2() {
                     <span className="text-deep-purple/80 font-medium mb-4 block text-lg">
                         The Skincare App for Families
                     </span>
-                    <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold text-deep-purple mb-8 leading-[0.9] tracking-tighter uppercase font-display">
-                        Find What Works.<br />
+                    <h1 className="text-5xl md:text-7xl font-bold text-deep-purple mb-8 leading-tight tracking-tight font-display">
+                        Find what works.<br />
                         <span className="text-ultraviolet">Fast.</span>
                     </h1>
                     <p className="text-xl md:text-2xl text-deep-purple/70 mb-10 max-w-md leading-relaxed">
