@@ -1,4 +1,5 @@
 "use client";
+import { storyblokEditable } from "@storyblok/react";
 import { ShieldCheck, Sparkles, Smile, Sun, Leaf, Droplets } from "lucide-react";
 
 const features = [
@@ -10,9 +11,9 @@ const features = [
     { icon: Droplets, text: "Hydration First" },
 ];
 
-export default function FeatureMarquee() {
+export default function FeatureMarquee({ blok }: { blok: any }) {
     return (
-        <div className="bg-peach text-deep-purple py-6 overflow-hidden border-y border-deep-purple/5">
+        <div {...storyblokEditable(blok)} className="bg-peach text-deep-purple py-6 overflow-hidden border-y border-deep-purple/5">
             <div className="flex gap-12 whitespace-nowrap animate-marquee">
                 {/* Duplicate the items to ensure seamless loop */}
                 {[...features, ...features, ...features, ...features].map((feature, i) => (

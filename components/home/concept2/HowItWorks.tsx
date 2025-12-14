@@ -1,18 +1,19 @@
+import { storyblokEditable } from "@storyblok/react";
 import { ArrowRight } from "lucide-react";
 
-export default function HowItWorks() {
+export default function HowItWorks({ blok }: { blok: any }) {
     const steps = ["Scan", "Learn", "Decide", "Build habits"];
 
     return (
-        <section className="py-24 bg-deep-purple text-white relative overflow-hidden">
+        <section {...storyblokEditable(blok)} className="py-24 bg-deep-purple text-white relative overflow-hidden">
             {/* Background blobs */}
             <div className="absolute top-0 right-0 w-96 h-96 bg-ultraviolet opacity-20 blur-[100px] rounded-full translate-x-1/2 -translate-y-1/2"></div>
             <div className="absolute bottom-0 left-0 w-96 h-96 bg-mint opacity-10 blur-[100px] rounded-full -translate-x-1/2 translate-y-1/2"></div>
 
             <div className="container mx-auto px-4 text-center relative z-10">
-                <h2 className="text-4xl md:text-5xl font-bold mb-6 font-display">Designed to work together.</h2>
+                <h2 className="text-4xl md:text-5xl font-bold mb-6 font-display">{blok.headline || "Designed to work together."}</h2>
                 <p className="text-xl text-white/80 max-w-2xl mx-auto mb-16 leading-relaxed">
-                    Freshies connects scanning, learning and routines into one calm experience. Scan a product, understand what’s inside, and turn good choices into healthy habits your kids can build on.
+                    {blok.body || "Freshies connects scanning, learning and routines into one calm experience. Scan a product, understand what’s inside, and turn good choices into healthy habits your kids can build on."}
                 </p>
 
                 <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12">

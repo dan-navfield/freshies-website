@@ -1,16 +1,17 @@
+import { storyblokEditable } from "@storyblok/react";
 import { Star, TrendingUp, Shield } from "lucide-react";
 
-export default function KidsJourney() {
+export default function KidsJourney({ blok }: { blok: any }) {
     return (
-        <section className="py-24 bg-cream">
+        <section {...storyblokEditable(blok)} className="py-24 bg-cream">
             <div className="container mx-auto px-4">
                 <div className="bg-white rounded-[2.5rem] p-8 md:p-16 shadow-xl text-center md:text-left flex flex-col md:flex-row items-center gap-12">
                     <div className="flex-1">
                         <h2 className="text-4xl md:text-5xl font-bold text-deep-purple mb-6 font-display">
-                            Your skincare journey, your way.
+                            {blok.headline || "Your skincare journey, your way."}
                         </h2>
                         <p className="text-lg text-slate-600 mb-8 leading-relaxed">
-                            Freshies helps kids and teens take ownership of their skincare journey in a positive, supportive way. Track progress, build streaks, and learn what works for your skin without pressure or comparison.
+                            {blok.body || "Freshies helps kids and teens take ownership of their skincare journey in a positive, supportive way. Track progress, build streaks, and learn what works for your skin without pressure or comparison."}
                         </p>
 
                         <div className="space-y-4">

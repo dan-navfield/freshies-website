@@ -11,169 +11,135 @@ const Storyblok = new StoryblokClient({ oauthToken: STORYBLOK_OAUTH_TOKEN });
 const homeAlt2Content = {
     component: "page",
     body: [
-        // 1. Hero
+        // 1. Concept 2 Hero
         {
-            component: "hero_section",
+            component: "concept_2_hero",
             eyebrow: "Skincare made for families",
-            headline: "Understand what’s safe for your kids’ skin.",
-            subheadline: "Freshies helps parents and kids make smarter skincare choices together. Scan products, understand ingredients, and build healthy routines that grow with your child.",
-            cta_primary_text: "Download the app",
-            cta_secondary_text: "How Freshies works",
-            layout: "split_left",
-            visual_style: "layered_phones_parallax",
-            background_theme: "peach"
+            headline: "Smarter skincare choices, made together.",
+            subheadline: "Think routines, not battles. Build healthy habits, scan products for safety, and learn together.",
+            cta_primary_text: "Get Freshies",
+            cta_secondary_text: "Learn More",
         },
-        // 2. Problem Framing
+        // 2. Feature Marquee (No fields needed, hardcoded in component for now, or added as empty block)
         {
-            component: "content_section",
-            headline: "Skincare shouldn’t be confusing or stressful.",
-            body: "Kids and teens are exposed to more skincare products than ever. Ingredients lists are hard to read, trends change fast, and it’s not always clear what’s actually safe for developing skin. Parents want clarity. Kids want independence. Freshies is built to support both.",
-            layout: "split_left",
-            background_color: "neutral",
-            visual_element: "ingredient_confusion"
+            component: "feature_marquee"
         },
-        // 3. Feature Overview (Interactive Grid with Preview on Top)
+        // 3. Problem Framing (with Mint background)
         {
-            component: "interactive_feature_showcase",
-            headline: "Everything you need to build healthy habits.",
-            layout: "preview_top",
-            background_color: "dark",
-            features: [
-                {
-                    component: "feature_tab_item",
-                    tab_icon: "scan",
-                    tab_title: "Product Scanning",
-                    tab_description: "Instant safety scores and clear ingredient breakdowns.",
-                    headline: "Know what's safe instantly.",
-                    body: "Scan any barcode to see a simple 0-100 safety score. We flag harsh chemicals and allergens so you can shop with confidence.",
-                    visual_style: "scan_demo",
-                    cta_text: "Try scanning"
-                },
-                {
-                    component: "feature_tab_item",
-                    tab_icon: "sparkles",
-                    tab_title: "Daily Routines",
-                    tab_description: "Simple AM/PM streaks for building independence.",
-                    headline: "Habits that stick.",
-                    body: "Create custom routines that grow with your child. Gamified streaks make consistency fun, not a chore.",
-                    visual_style: "routine_checklist",
-                    cta_text: "Build a routine"
-                },
-                {
-                    component: "feature_tab_item",
-                    tab_icon: "book",
-                    tab_title: "Learning",
-                    tab_description: "Bite-sized guides for parents and kids.",
-                    headline: "Learn together.",
-                    body: "From 'What is Retinol?' to understanding skin types, our library helps you navigate the skincare world safely.",
-                    visual_style: "floating_icons",
-                    cta_text: "Start learning"
-                },
-                {
-                    component: "feature_tab_item",
-                    tab_icon: "library",
-                    tab_title: "Family Shelf",
-                    tab_description: "Manage products for the whole household.",
-                    headline: "One shelf, everyone's favorites.",
-                    body: "Keep track of who uses what. Avoid duplicate buys and monitor expiration dates easily.",
-                    visual_style: "image", // Fallback to image for shelf if specific component not available inside this block nesting yet, or use generic
-                    cta_text: "Organize shelf"
-                }
-            ]
+            component: "problem_framing", // mapped to ProblemFraming.tsx
+            headline: "Skincare shouldn’t feel confusing or stressful.",
+            body: "Kids and teenagers are exposed to more skincare products than ever before. Ingredient lists are hard to read, trends change fast, and it’s not always clear what’s actually safe for young, developing skin.",
+            highlight_1: "Parents want clarity and confidence.",
+            highlight_2: "Kids want independence and understanding.",
+            footer_text: "Freshies was created to support both, with clear guidance, friendly education and tools that help families make decisions together.",
+            background_color: "mint"
         },
-        // 4. Feature 1 - Scanning (Deep Dive)
+        // 4. Feature Overview (Grid)
         {
-            component: "content_section",
-            eyebrow: "Product Scanning",
+            component: "feature_overview",
+            headline: "Everything you need to make better skincare choices.",
+            intro_line: "Freshies brings safety, learning and habit-building together in one simple app."
+        },
+        // 5. Deep Dives (4 FeatureDeepDive blocks)
+        // Scanning
+        {
+            component: "feature_deep_dive",
+            label: "Scan and check",
             headline: "Scan products and understand what’s safe.",
-            body: "Freshies lets parents and kids scan skincare products to see a clear safety score and ingredient breakdown. It helps families understand what’s generally safe, and what may not be right for a specific child.",
-            key_points: [
-                { component: "simple_text_item", text: "Scan barcodes or labels" },
-                { component: "simple_text_item", text: "Clear 0–100 safety score" },
-                { component: "simple_text_item", text: "Colour coded risk indicators" },
-                { component: "simple_text_item", text: "Ingredient explanations in plain language" }
+            body: "Use your phone’s camera to scan skincare products at home or in store. Freshies breaks down long ingredient lists, highlights potential concerns, and shows a clear 0–100 safety score to help guide decisions.",
+            bullets: [
+                "Scan barcodes or product labels",
+                "Clear safety score out of 100",
+                "Simple colour cues to highlight risk",
+                "Ingredient explanations in plain language"
             ],
-            layout: "split_left", // Visual on right, text left
-            visual_element: "scan_demo",
-            background_color: "white"
+            supporting_line: "No guessing in the chemist aisle. No decoding tiny labels at home.",
+            image: { filename: "/images/home-hero2.png", alt: "Scanning demo" },
+            is_reversed: false
         },
-        // 5. Feature 2 - Routines
+        // Routines
         {
-            component: "content_section",
-            eyebrow: "Routines",
-            headline: "Build healthy skincare habits together.",
-            body: "Freshies helps kids and teens build simple morning and night routines using products that are right for them. Parents can guide and check in, while kids build independence and confidence.",
-            key_points: [
-                { component: "simple_text_item", text: "Short, age appropriate routines" },
-                { component: "simple_text_item", text: "Morning and night steps" },
-                { component: "simple_text_item", text: "Visual progress and streaks" },
-                { component: "simple_text_item", text: "Encourages consistency, not perfection" }
+            component: "feature_deep_dive",
+            label: "Daily habits",
+            headline: "Build healthy skincare routines that stick.",
+            body: "Freshies helps families turn safe products into simple daily routines. Designed for school mornings, sport, sleepovers and busy family life, routines are short, achievable and age-appropriate.",
+            bullets: [
+                "Morning and night routines",
+                "Steps linked to products on your shelf",
+                "Visual progress kids can follow",
+                "Encourages consistency, not perfection"
             ],
-            layout: "right_text_left_image", // Visual left
-            visual_element: "routine_checklist",
-            background_color: "neutral" // soft bg
+            micro_copy: "Tick it off, keep your streak going, and you’re done.",
+            image: { filename: "/images/routine-list.png", alt: "Routine demo" },
+            is_reversed: true
         },
-        // 6. Feature 3 - Learning
+        // Learning
         {
-            component: "content_section",
-            eyebrow: "Education",
+            component: "feature_deep_dive",
+            label: "Learn",
             headline: "Learn what ingredients really mean.",
-            body: "Freshies includes a learning space where parents and kids can explore skincare topics together. From ingredient basics to trend explainers, everything is written in clear, friendly language.",
-            key_points: [
-                { component: "simple_text_item", text: "Ingredient explainers" },
-                { component: "simple_text_item", text: "Guides for kids and parents" },
-                { component: "simple_text_item", text: "Linked directly from scans" }
+            body: "Freshies Learn helps parents and kids understand skincare without the jargon. From ingredient basics to common questions and trends, content is written in clear, friendly language for families to explore together.",
+            bullets: [
+                "Ingredient explainers",
+                "Product guidance by age and need",
+                "Healthy skincare habit guides",
+                "Calm explanations of trends kids are seeing online"
             ],
-            layout: "split_left",
-            visual_element: "floating_icons",
-            background_color: "white"
+            supporting_line: "No fear. No judgement. Just the facts you need.",
+            image: { filename: "/images/welcome-ruby.png", alt: "Safety demo" },
+            is_reversed: false
         },
-        // 7. Feature 4 - Shelf
+        // Shelf
         {
-            component: "content_section",
-            eyebrow: "Family Shelf",
+            component: "feature_deep_dive",
+            label: "Your shelf",
             headline: "Keep track of what your family uses.",
-            body: "Freshies keeps a record of the skincare products in your home, linked to the kids who use them. This helps families make better choices over time and avoid confusion or duplication.",
-            key_points: [
-                { component: "simple_text_item", text: "Products linked to each child" },
-                { component: "simple_text_item", text: "Easy to add to routines" },
-                { component: "simple_text_item", text: "See favourites and unused items" }
+            body: "Your shelf is a simple way to see all the skincare products in your home, linked to the kids who use them. It helps families stay organised, avoid confusion, and make better choices over time.",
+            bullets: [
+                "One place for all products at home",
+                "Products linked to each child",
+                "Easy to add items to routines",
+                "Helps avoid duplicates and unused products"
             ],
-            layout: "right_text_left_image",
-            visual_element: "shelf_display",
-            background_color: "neutral"
+            micro_copy: "Your skincare setup, all in one place.",
+            image: { filename: "/images/routine-detail.png", alt: "Shelf demo" },
+            is_reversed: true
         },
-        // 8. Kids Journey
+        // 6. How It Works
         {
-            component: "content_section",
-            eyebrow: "For Kids & Teens",
+            component: "how_it_works",
+            headline: "Designed to work together.",
+            body: "Freshies connects scanning, learning and routines into one calm experience. Scan a product, understand what’s inside, and turn good choices into healthy habits your kids can build on."
+        },
+        // 7. Kids Journey
+        {
+            component: "kids_journey",
             headline: "Your skincare journey, your way.",
-            body: "Freshies helps kids and teens take ownership of their skincare journey. Track progress, earn small wins, and build habits that feel positive and empowering.",
-            layout: "center_text",
-            visual_element: "none", // Maybe add badges later
-            background_color: "dark" // Change pace
+            body: "Freshies helps kids and teens take ownership of their skincare journey in a positive, supportive way. Track progress, build streaks, and learn what works for your skin without pressure or comparison."
+        },
+        // 8. Social Proof
+        {
+            component: "social_proof",
+            headline: "Loved by families."
         },
         // 9. Trust
         {
-            component: "content_section",
-            headline: "Built with care.",
-            body: "Designed to support families, not replace professional advice. Privacy and child safety first. No public social feeds or comparison pressure.",
-            layout: "center_text",
-            background_color: "white",
-            visual_element: "none"
+            component: "trust_reassurance",
+            headline: "Built with care."
         },
         // 10. Final CTA
         {
-            component: "cta_section",
+            component: "final_cta",
             headline: "Ready to make skincare simpler for your family?",
-            cta_text: "Download Freshies",
-            background_style: "gradient"
+            body: "Join families using Freshies to make safer, smarter skincare choices together.",
+            primary_cta: "Download the app",
+            secondary_cta: "Explore Learn"
         }
     ]
 };
 
 async function seed() {
-    console.log("🌱 Seeding Home-Alt-2...");
+    console.log("🌱 Seeding Home-Alt-2 with Custom Components...");
     try {
         await Storyblok.post(`spaces/${SPACE_ID}/stories`, {
             story: {
@@ -187,7 +153,8 @@ async function seed() {
     } catch (e) {
         console.log("Creation failed, trying update...");
         try {
-            // If duplicate slug exists, try deleting first to ensure clean state given previous issues
+            // If duplicate slug exists, we should update instead of delete/create to preserve ID if possible, 
+            // but delete/create is cleaner for structure changes.
             const stories = await Storyblok.get(`spaces/${SPACE_ID}/stories`, { with_slug: "home-alt-2" });
             if (stories.data.stories.length > 0) {
                 console.log("🗑️ Deleting existing...");

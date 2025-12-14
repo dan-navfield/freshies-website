@@ -29,6 +29,14 @@ import { LearnTrust } from "@/components/learn/LearnTrust";
 import { IngredientPage } from "@/components/learn/ingredients/IngredientPage";
 import { GuidePage } from "@/components/learn/guides/GuidePage";
 import { TrendPage } from "@/components/learn/trends/TrendPage";
+import HomeHeroConcept2 from "@/components/home/HomeHeroConcept2";
+import FeatureMarquee from "@/components/home/FeatureMarquee";
+import ProblemFraming from "@/components/home/concept2/ProblemFraming";
+import FeatureOverview from "@/components/home/concept2/FeatureOverview";
+import FeatureDeepDive from "@/components/home/concept2/FeatureDeepDive";
+import HowItWorks from "@/components/home/concept2/HowItWorks";
+import KidsJourney from "@/components/home/concept2/KidsJourney";
+import { SocialProof, TrustReassurance, FinalCta } from "@/components/home/concept2/SupportingSections";
 import { storyblokInit, apiPlugin } from "@storyblok/react";
 
 export const getStoryblokApi = storyblokInit({
@@ -72,5 +80,16 @@ export const getStoryblokApi = storyblokInit({
         ingredient_page: IngredientPage,
         guide_page: GuidePage,
         trend_page: TrendPage,
+        // Concept 2
+        concept_2_hero: HomeHeroConcept2,
+        feature_marquee: FeatureMarquee,
+        problem_framing: ProblemFraming,
+        feature_overview: FeatureOverview,
+        feature_deep_dive: FeatureDeepDive,
+        how_it_works: HowItWorks,
+        kids_journey: KidsJourney,
+        social_proof: SocialProof,
+        trust_reassurance: TrustReassurance,
+        final_cta: FinalCta,
     },
 });

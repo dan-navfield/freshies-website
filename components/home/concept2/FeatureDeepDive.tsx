@@ -1,33 +1,41 @@
+import { storyblokEditable } from "@storyblok/react";
 import Image from "next/image";
 import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+// If used directly via Storyblok, props come in 'blok'. 
+// If used as a sub-component manually, we might pass props.
+// Let's support both or prioritize blok.
 interface DeepDiveProps {
-    label: string;
-    headline: string;
-    body: string;
-    bullets: string[];
+    blok?: any;
+    label?: string;
+    headline?: string;
+    body?: string;
+    bullets?: string[];
     supportingLine?: string;
     microCopy?: string;
-    imageSrc: string; // We'll just pass generic images for now since we don't have all assets
-    imageAlt: string;
-    isReversed?: boolean; // Toggle image/text side
-    colorTheme?: "purple" | "mint" | "peach"; // For subtle background accents if needed
+    imageSrc?: string;
+    imageAlt?: string;
+    isReversed?: boolean;
 }
 
-export default function FeatureDeepDive({
-    label,
-    headline,
-    body,
-    bullets,
-    supportingLine,
-    microCopy,
-    imageSrc,
-    imageAlt,
-    isReversed = false,
-}: DeepDiveProps) {
+export default function FeatureDeepDive({ blok, ...props }: DeepDiveProps) {
+    // Prefer blok data, fallback to props
+    const label = blok?.label || props.label;
+    const headline = blok?.headline || props.headline;
+    const body = blok?.body || props.body;
+    const bullets = blok?.bullets ? (Array.isArray(blok.bullets) ? blok.bullets : blok.bullets.split(',')) : props.bullets || [];
+    // Need to handle bullet format from Storyblok (likely a list or text area split by newlines if simple)
+    // For now assuming array passed or split string.
+
+    const supportingLine = blok?.supporting_line || props.supportingLine;
+    const microCopy = blok?.micro_copy || props.microCopy;
+    const imageSrc = blok?.image?.filename || props.imageSrc || "/images/home-hero2.png"; // Fallback
+    const imageAlt = blok?.image?.alt || props.imageAlt || "Feature image";
+    const isReversed = blok?.is_reversed || props.isReversed;
+
     return (
-        <section className="py-24 border-b border-slate-100 overflow-hidden">
+        <section {...(blok ? storyblokEditable(blok) : {})} className="py-24 border-b border-slate-100 overflow-hidden">
             <div className="container mx-auto px-4">
                 <div className={cn("flex flex-col lg:flex-row items-center gap-12 lg:gap-24", isReversed && "lg:flex-row-reverse")}>
 
@@ -44,7 +52,7 @@ export default function FeatureDeepDive({
                         </p>
 
                         <ul className="space-y-4 mb-8">
-                            {bullets.map((bullet, i) => (
+                            {bullets.map((bullet: string, i: number) => (
                                 <li key={i} className="flex items-start gap-3">
                                     <div className="mt-1 w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
                                         <Check size={12} className="text-green-600 stroke-[3]" />

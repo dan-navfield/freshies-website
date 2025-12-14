@@ -1,3 +1,4 @@
+import { storyblokEditable } from "@storyblok/react";
 import { Scan, CalendarCheck, BookOpen, Package } from "lucide-react";
 
 const features = [
@@ -23,24 +24,23 @@ const features = [
     }
 ];
 
-export default function FeatureOverview() {
+export default function FeatureOverview({ blok }: { blok: any }) {
     return (
-        <section className="py-24 bg-white">
+        <section {...storyblokEditable(blok)} className="py-24 bg-white">
             <div className="container mx-auto px-4">
                 <div className="text-center max-w-3xl mx-auto mb-16">
                     <h2 className="text-4xl font-bold text-deep-purple mb-4 font-display">
-                        Everything you need to make better skincare choices.
+                        {blok.headline || "Everything you need to make better skincare choices."}
                     </h2>
                     <p className="text-xl text-slate-600">
-                        Freshies brings safety, learning and habit-building together in one simple app.
+                        {blok.intro_line || "Freshies brings safety, learning and habit-building together in one simple app."}
                     </p>
                 </div>
 
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
                     {features.map((feature, i) => (
                         <div key={i} className="bg-slate-50 p-8 rounded-2xl md:text-center group hover:bg-peach-50 transition-colors">
-                            <div className="w-12 h-12 bg-ultraviolet/10 text-ultraviolet rounded-xl flex items-center justify-center mb-6 md:mx-auto group-hover:bg-u
-ltraviolet group-hover:text-white transition-colors">
+                            <div className="w-12 h-12 bg-ultraviolet/10 text-ultraviolet rounded-xl flex items-center justify-center mb-6 md:mx-auto group-hover:bg-ultraviolet group-hover:text-white transition-colors">
                                 <feature.icon size={24} />
                             </div>
                             <h3 className="text-xl font-bold text-deep-purple mb-3">{feature.title}</h3>
