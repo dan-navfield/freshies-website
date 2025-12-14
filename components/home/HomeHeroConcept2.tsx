@@ -16,8 +16,7 @@ export default function HomeHeroConcept2() {
                         </span>
                     </div>
                     <h1 className="text-5xl md:text-7xl font-bold text-deep-purple mb-6 leading-[1.1] tracking-tight font-display">
-                        Find what works.<br />
-                        <span className="text-ultraviolet">Fast.</span>
+                        Smarter skincare choices, made together.
                     </h1>
                     <p className="text-lg md:text-xl text-slate-600 mb-8 max-w-lg leading-normal">
                         Think routines, not battles. Build healthy habits, scan products for safety, and learn together.
