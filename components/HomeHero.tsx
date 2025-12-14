@@ -13,14 +13,14 @@ export default function HomeHero({ blok }: { blok: any }) {
 
             <div className="container mx-auto px-4 relative z-10">
                 <div className="max-w-4xl mx-auto text-center mb-12">
-                    <div className="flex justify-center mb-8">
-                        <Image src="/logo.svg" alt="Freshies Logo" width={160} height={42} className="h-10 w-auto" />
-                    </div>
                     {blok.eyebrow && (
                         <span className="inline-block py-1 px-3 rounded-full bg-ultraviolet/10 text-ultraviolet text-sm font-semibold mb-6">
                             {blok.eyebrow}
                         </span>
                     )}
+                    <div className="flex justify-center mb-8">
+                        <Image src="/logo.svg" alt="Freshies Logo" width={220} height={58} className="h-14 w-auto" />
+                    </div>
                     <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight leading-tight">
                         {blok.headline_part_1} <span className="text-transparent bg-clip-text bg-gradient-to-r from-ultraviolet to-mint">{blok.headline_gradient}</span> {blok.headline_part_2}
                     </h1>
