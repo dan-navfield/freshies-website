@@ -47,12 +47,7 @@ const homeAlt2Content = {
             label: "Scan and check",
             headline: "Scan products and understand what’s safe.",
             body: "Use your phone’s camera to scan skincare products at home or in store. Freshies breaks down long ingredient lists, highlights potential concerns, and shows a clear 0–100 safety score to help guide decisions.",
-            bullets: [
-                "Scan barcodes or product labels",
-                "Clear safety score out of 100",
-                "Simple colour cues to highlight risk",
-                "Ingredient explanations in plain language"
-            ],
+            bullets: "Scan barcodes or product labels\nClear safety score out of 100\nSimple colour cues to highlight risk\nIngredient explanations in plain language",
             supporting_line: "No guessing in the chemist aisle. No decoding tiny labels at home.",
             image: { filename: "/images/home-hero2.png", alt: "Scanning demo" },
             is_reversed: false
@@ -63,12 +58,7 @@ const homeAlt2Content = {
             label: "Daily habits",
             headline: "Build healthy skincare routines that stick.",
             body: "Freshies helps families turn safe products into simple daily routines. Designed for school mornings, sport, sleepovers and busy family life, routines are short, achievable and age-appropriate.",
-            bullets: [
-                "Morning and night routines",
-                "Steps linked to products on your shelf",
-                "Visual progress kids can follow",
-                "Encourages consistency, not perfection"
-            ],
+            bullets: "Morning and night routines\nSteps linked to products on your shelf\nVisual progress kids can follow\nEncourages consistency, not perfection",
             micro_copy: "Tick it off, keep your streak going, and you’re done.",
             image: { filename: "/images/routine-list.png", alt: "Routine demo" },
             is_reversed: true
@@ -79,12 +69,7 @@ const homeAlt2Content = {
             label: "Learn",
             headline: "Learn what ingredients really mean.",
             body: "Freshies Learn helps parents and kids understand skincare without the jargon. From ingredient basics to common questions and trends, content is written in clear, friendly language for families to explore together.",
-            bullets: [
-                "Ingredient explainers",
-                "Product guidance by age and need",
-                "Healthy skincare habit guides",
-                "Calm explanations of trends kids are seeing online"
-            ],
+            bullets: "Ingredient explainers\nProduct guidance by age and need\nHealthy skincare habit guides\nCalm explanations of trends kids are seeing online",
             supporting_line: "No fear. No judgement. Just the facts you need.",
             image: { filename: "/images/welcome-ruby.png", alt: "Safety demo" },
             is_reversed: false
@@ -95,12 +80,7 @@ const homeAlt2Content = {
             label: "Your shelf",
             headline: "Keep track of what your family uses.",
             body: "Your shelf is a simple way to see all the skincare products in your home, linked to the kids who use them. It helps families stay organised, avoid confusion, and make better choices over time.",
-            bullets: [
-                "One place for all products at home",
-                "Products linked to each child",
-                "Easy to add items to routines",
-                "Helps avoid duplicates and unused products"
-            ],
+            bullets: "One place for all products at home\nProducts linked to each child\nEasy to add items to routines\nHelps avoid duplicates and unused products",
             micro_copy: "Your skincare setup, all in one place.",
             image: { filename: "/images/routine-detail.png", alt: "Shelf demo" },
             is_reversed: true

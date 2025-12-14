@@ -24,9 +24,10 @@ export default function FeatureDeepDive({ blok, ...props }: DeepDiveProps) {
     const label = blok?.label || props.label;
     const headline = blok?.headline || props.headline;
     const body = blok?.body || props.body;
-    const bullets = blok?.bullets ? (Array.isArray(blok.bullets) ? blok.bullets : blok.bullets.split(',')) : props.bullets || [];
-    // Need to handle bullet format from Storyblok (likely a list or text area split by newlines if simple)
-    // For now assuming array passed or split string.
+    const bulletsRaw = blok?.bullets || props.bullets;
+    const bullets = Array.isArray(bulletsRaw)
+        ? bulletsRaw
+        : (typeof bulletsRaw === 'string' ? bulletsRaw.split('\n').filter(b => b.trim()) : []);
 
     const supportingLine = blok?.supporting_line || props.supportingLine;
     const microCopy = blok?.micro_copy || props.microCopy;

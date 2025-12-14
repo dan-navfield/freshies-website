@@ -44,17 +44,25 @@ export function TrustReassurance({ blok }: { blok: any }) {
             <div className="container mx-auto px-4 text-center">
                 <h2 className="text-3xl font-bold text-deep-purple mb-12 font-display">{blok?.headline || "Built with care."}</h2>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-5xl mx-auto">
-                    {(blok?.items || [
-                        "Written for families, not influencers",
-                        "Focused on developing skin",
-                        "Not medical advice, but informed guidance",
-                        "Privacy and child safety first"
-                    ]).map((item: string, i: number) => (
-                        <div key={i} className="flex flex-col items-center gap-3">
-                            <div className="w-1.5 h-1.5 rounded-full bg-ultraviolet"></div>
-                            <span className="font-medium text-slate-700">{item}</span>
-                        </div>
-                    ))}
+                    {(() => {
+                        const rawItems = blok?.items;
+                        const defaultItems = [
+                            "Written for families, not influencers",
+                            "Focused on developing skin",
+                            "Not medical advice, but informed guidance",
+                            "Privacy and child safety first"
+                        ];
+                        const items = rawItems
+                            ? (Array.isArray(rawItems) ? rawItems : rawItems.split('\n').filter((i: string) => i.trim()))
+                            : defaultItems;
+
+                        return items.map((item: string, i: number) => (
+                            <div key={i} className="flex flex-col items-center gap-3">
+                                <div className="w-1.5 h-1.5 rounded-full bg-ultraviolet"></div>
+                                <span className="font-medium text-slate-700">{item}</span>
+                            </div>
+                        ));
+                    })()}
                 </div>
             </div>
         </section>
