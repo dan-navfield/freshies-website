@@ -6,13 +6,27 @@ export default async function Page(props: { params: Promise<{ slug: string[] }> 
     let slug = params.slug ? params.slug.join("/") : "home";
 
     const storyblokApi = getStoryblokApi();
-    let { data } = await storyblokApi.get(`cdn/stories/${slug}`, { version: "draft" });
 
-    return (
-        <div>
-            <StoryblokPage story={data.story} />
-        </div>
-    );
+    try {
+        let { data } = await storyblokApi.get(`cdn/stories/${slug}`, { version: "draft" });
+
+        return (
+            <div>
+                <StoryblokPage story={data.story} />
+            </div>
+        );
+    } catch (e) {
+        console.error("Storyblok API Failed:", e);
+        return (
+            <div className="p-12 text-center">
+                <h1 className="text-2xl font-bold text-red-500 mb-4">Content Load Error</h1>
+                <p className="mb-4">Could not load story: {slug}</p>
+                <code className="block bg-slate-100 p-4 rounded text-left overflow-auto max-w-xl mx-auto text-sm">
+                    {JSON.stringify(e, null, 2)}
+                </code>
+            </div>
+        );
+    }
 }
 
 export async function generateStaticParams() {
