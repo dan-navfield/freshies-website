@@ -1,6 +1,6 @@
 export default function ProblemFraming() {
     return (
-        <section className="py-24 bg-cream">
+        <section className="py-24 bg-mint">
             <div className="container mx-auto px-4 max-w-4xl text-center">
                 <h2 className="text-4xl md:text-5xl font-bold text-deep-purple mb-8 font-display">
                     Skincare shouldn’t feel confusing or stressful.
