@@ -1,5 +1,11 @@
 import HomeHeroConcept2 from "@/components/home/HomeHeroConcept2";
 import FeatureMarquee from "@/components/home/FeatureMarquee";
+import ProblemFraming from "@/components/home/concept2/ProblemFraming";
+import FeatureOverview from "@/components/home/concept2/FeatureOverview";
+import DeepDives from "@/components/home/concept2/DeepDives";
+import HowItWorks from "@/components/home/concept2/HowItWorks";
+import KidsJourney from "@/components/home/concept2/KidsJourney";
+import { SocialProof, TrustReassurance, FinalCta } from "@/components/home/concept2/SupportingSections";
 import { getStoryblokApi } from "@/lib/storyblok";
 import StoryblokPage from "@/components/StoryblokPage"; // Fallback to reusing chunks of the main page if needed, but for now completely custom top
 
@@ -15,11 +21,14 @@ export default async function HomeAlt2() {
         <div className="bg-cream min-h-screen">
             <HomeHeroConcept2 />
             <FeatureMarquee />
-
-            <div className="container mx-auto px-4 py-24 text-center">
-                <h2 className="text-3xl font-bold text-deep-purple mb-4">Concept 2 Demo</h2>
-                <p className="text-slate-600">This is a layout variation focusing on maximum visual impact.</p>
-            </div>
+            <ProblemFraming />
+            <FeatureOverview />
+            <DeepDives />
+            <HowItWorks />
+            <KidsJourney />
+            <SocialProof />
+            <TrustReassurance />
+            <FinalCta />
         </div>
     );
 }
