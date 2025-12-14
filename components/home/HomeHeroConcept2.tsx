@@ -9,14 +9,17 @@ export default function HomeHeroConcept2() {
             {/* Left Content */}
             <div className="w-full md:w-1/2 flex flex-col justify-center px-6 md:px-20 py-20 md:py-0 bg-[#E0F7F6]">
                 <div className="max-w-xl">
-                    <span className="text-deep-purple/80 font-medium mb-4 block text-lg">
-                        The Skincare App for Families
-                    </span>
-                    <h1 className="text-5xl md:text-7xl font-bold text-deep-purple mb-8 leading-tight tracking-tight font-display">
+                    <div className="inline-flex items-center gap-2 bg-ultraviolet/5 rounded-full px-4 py-1.5 mb-6">
+                        <div className="w-2 h-2 rounded-full bg-ultraviolet"></div>
+                        <span className="text-ultraviolet font-medium text-sm">
+                            Skincare made for families
+                        </span>
+                    </div>
+                    <h1 className="text-5xl md:text-7xl font-bold text-deep-purple mb-6 leading-[1.1] tracking-tight font-display">
                         Find what works.<br />
                         <span className="text-ultraviolet">Fast.</span>
                     </h1>
-                    <p className="text-xl md:text-2xl text-deep-purple/70 mb-10 max-w-md leading-relaxed">
+                    <p className="text-lg md:text-xl text-slate-600 mb-8 max-w-lg leading-normal">
                         Think routines, not battles. Build healthy habits, scan products for safety, and learn together.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4">
