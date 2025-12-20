@@ -6,7 +6,7 @@ import { useSupabaseData } from '@/hooks/useSupabaseData';
 import { ChevronLeft, ChevronRight, SlidersHorizontal, ArrowDownAZ, ArrowUpAZ } from 'lucide-react';
 
 interface IngredientsExplorerProps {
-    title: string;
+    title?: string;
     subtitle?: string;
     categories: string[];
 }
@@ -39,20 +39,21 @@ export function IngredientsExplorer({ title, subtitle, categories }: Ingredients
         // 1. Source: Search Result ID set OR All Ingredients
         let data = searchResult !== null ? searchResult : allIngredients;
 
-        // 2. Category Filter
+        // 2. Filter by Category
         if (selectedCategory !== 'All') {
-            data = data.filter(item =>
-                // Flexible matching: exact match or includes tag
-                item.category === selectedCategory || item.tags?.includes(selectedCategory)
-            );
+            data = data.filter((item: any) => {
+                // Handle comma-separated categories or arrays if needed, currently string match
+                // Our mock data has single category strings.
+                return item.category === selectedCategory;
+            });
         }
 
         // 3. Sort
-        data = [...data].sort((a, b) => {
-            if (sortOrder === 'name-asc') return a.name.localeCompare(b.name);
-            if (sortOrder === 'name-desc') return b.name.localeCompare(a.name);
-            return 0;
-        });
+        if (sortOrder === 'name-asc') {
+            data = [...data].sort((a, b) => a.name.localeCompare(b.name));
+        } else if (sortOrder === 'name-desc') {
+            data = [...data].sort((a, b) => b.name.localeCompare(a.name));
+        }
 
         return data;
     }, [allIngredients, searchResult, selectedCategory, sortOrder]);
@@ -81,17 +82,19 @@ export function IngredientsExplorer({ title, subtitle, categories }: Ingredients
 
     return (
         <section className="py-16 px-4 md:px-8 max-w-7xl mx-auto min-h-[600px]">
-            {/* Header Section */}
-            <div className="text-center mb-12">
-                <h2 className="text-4xl md:text-5xl font-extrabold text-[#3d1861] mb-4 tracking-tight">
-                    {title}
-                </h2>
-                {subtitle && (
-                    <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto">
-                        {subtitle}
-                    </p>
-                )}
-            </div>
+            {/* Header Section - Only render if title is provided */}
+            {title && (
+                <div className="text-center mb-12">
+                    <h2 className="text-4xl md:text-5xl font-extrabold text-[#3d1861] mb-4 tracking-tight">
+                        {title}
+                    </h2>
+                    {subtitle && (
+                        <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto">
+                            {subtitle}
+                        </p>
+                    )}
+                </div>
+            )}
 
             {/* Controls Section */}
             <div className="mb-10 relative z-50 space-y-6">
