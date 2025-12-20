@@ -70,6 +70,8 @@ export function smartSearch(data: any[], query: string): SmartSearchResponse {
     const fuse = new Fuse(data, {
         keys: [
             { name: 'name', weight: 0.7 },
+            { name: 'common_name', weight: 0.6 },
+            { name: 'inci_name', weight: 0.5 },
             { name: 'description', weight: 0.2 },
             { name: '_synonyms', weight: 0.4 } // Custom field we added
         ],

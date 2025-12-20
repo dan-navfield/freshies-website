@@ -14,7 +14,7 @@ interface IngredientsExplorerProps {
 type SortOption = 'name-asc' | 'name-desc';
 
 export function IngredientsExplorer({ title, subtitle, categories }: IngredientsExplorerProps) {
-    const { data: allIngredients, loading } = useSupabaseData('ingredients');
+    const { data: allIngredients, loading, error } = useSupabaseData('ingredients');
 
     const [activeIntent, setActiveIntent] = useState<Intent | null>(null);
     const [searchResult, setSearchResult] = useState<any[] | null>(null); // null means no active search
@@ -69,6 +69,16 @@ export function IngredientsExplorer({ title, subtitle, categories }: Ingredients
         setCurrentPage(page);
     };
 
+    if (error) {
+        return (
+            <div className="py-20 text-center text-red-600 bg-red-50 rounded-xl max-w-2xl mx-auto my-12 border border-red-100">
+                <p className="font-bold mb-2">Unable to load ingredients</p>
+                <p className="text-sm opacity-80">{error}</p>
+                <p className="text-xs text-slate-500 mt-4">Please check your network or database connection.</p>
+            </div>
+        );
+    }
+
     return (
         <section className="py-16 px-4 md:px-8 max-w-7xl mx-auto min-h-[600px]">
             {/* Header Section */}
@@ -99,8 +109,8 @@ export function IngredientsExplorer({ title, subtitle, categories }: Ingredients
                         <button
                             onClick={() => { setSelectedCategory('All'); setCurrentPage(1); }}
                             className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${selectedCategory === 'All'
-                                    ? 'bg-[#6b2c91] text-white shadow-md'
-                                    : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
+                                ? 'bg-[#6b2c91] text-white shadow-md'
+                                : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
                                 }`}
                         >
                             All
@@ -110,8 +120,8 @@ export function IngredientsExplorer({ title, subtitle, categories }: Ingredients
                                 key={cat}
                                 onClick={() => { setSelectedCategory(cat); setCurrentPage(1); }}
                                 className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${selectedCategory === cat
-                                        ? 'bg-[#6b2c91] text-white shadow-md'
-                                        : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
+                                    ? 'bg-[#6b2c91] text-white shadow-md'
+                                    : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
                                     }`}
                             >
                                 {cat}

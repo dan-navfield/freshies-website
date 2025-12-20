@@ -41,7 +41,17 @@ export function useSupabaseData(tableName: string, searchTerm: string = '', cate
 
                 if (fetchError) throw fetchError
 
-                setData(result || [])
+                if (fetchError) throw fetchError
+
+                // Normalize data: ensure 'name' exists by falling back to common_name or inci_name
+                const normalizedData = (result || []).map(item => ({
+                    ...item,
+                    name: item.name || item.common_name || item.inci_name || 'Unknown Ingredient',
+                    // Also ensure category is displayable, defaulting to Uncategorized if unknown/null
+                    category: (item.category && item.category !== 'unknown') ? item.category : 'Uncategorized'
+                }))
+
+                setData(normalizedData)
             } catch (err: any) {
                 console.error(`Error fetching ${tableName}:`, err)
                 setError(err.message)
