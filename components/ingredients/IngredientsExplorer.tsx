@@ -1,9 +1,9 @@
-
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { SmartSearchBar } from './SmartSearch';
-import { TileLayout } from '@/components/ui/TileLayout';
 import { IngredientCard } from '@/components/ui/IngredientCard';
 import { Intent } from '@/lib/searchLogic';
+import { useSupabaseData } from '@/hooks/useSupabaseData';
+import { ChevronLeft, ChevronRight, SlidersHorizontal, ArrowDownAZ, ArrowUpAZ } from 'lucide-react';
 
 interface IngredientsExplorerProps {
     title: string;
@@ -11,59 +11,96 @@ interface IngredientsExplorerProps {
     categories: string[];
 }
 
+type SortOption = 'name-asc' | 'name-desc';
+
 export function IngredientsExplorer({ title, subtitle, categories }: IngredientsExplorerProps) {
-    // If null, we haven't searched, so we might want to show all initially or just a few featured.
-    // TileLayout defaults to empty if we don't pass children, but we want to show initial data.
-    // The SmartSearchBar fetches data internally for client-side index.
-    // Ideally we lift that state up or re-fetch here for the grid.
-    // For simplicity, let's use the layout's internal "Search" as a fallback or replace it entirely?
+    const { data: allIngredients, loading } = useSupabaseData('ingredients');
 
-    // Actually, TileLayout has its own search input. We want to REPLACE that with SmartSearchBar.
-    // So we shouldn't use TileLayout directly as is, or we should modify TileLayout to accept a custom Search component.
-    // Let's copy the structure of TileLayout but use SmartSearchBar.
-
-    const [displayedItems, setDisplayedItems] = useState<any[]>([]);
     const [activeIntent, setActiveIntent] = useState<Intent | null>(null);
-    const [hasSearched, setHasSearched] = useState(false);
+    const [searchResult, setSearchResult] = useState<any[] | null>(null); // null means no active search
     const [selectedCategory, setSelectedCategory] = useState('All');
+    const [sortOrder, setSortOrder] = useState<SortOption>('name-asc');
+    const [currentPage, setCurrentPage] = useState(1);
 
+    const ITEMS_PER_PAGE = 9;
+
+    // Handle Smart Search updates
     const handleSearch = (results: any[], intent: any) => {
-        setDisplayedItems(results);
+        // If results equals full data length (and no query active), treat as "no search"
+        // But SmartSearch usually filters.
+        // If SmartSearch returns "all" because query is empty, we handle that.
+        setSearchResult(results);
         setActiveIntent(intent);
-        setHasSearched(true);
+        setCurrentPage(1); // Reset page on search
     };
 
-    // We also need to handle Category filtering from the pills.
-    // This is tricky if SmartSearch controls the results.
-    // Ideally SmartSearch also handles categories, OR we filter the `displayedItems` again here.
-    // Let's filter here.
-    const filteredItems = displayedItems.filter(item => {
-        if (selectedCategory === 'All') return true;
-        // Assuming item has category or tags
-        return item.category === selectedCategory;
-    });
+    // Filter & Sort Logic
+    const processedData = useMemo(() => {
+        // 1. Source: Search Result ID set OR All Ingredients
+        let data = searchResult !== null ? searchResult : allIngredients;
+
+        // 2. Category Filter
+        if (selectedCategory !== 'All') {
+            data = data.filter(item =>
+                // Flexible matching: exact match or includes tag
+                item.category === selectedCategory || item.tags?.includes(selectedCategory)
+            );
+        }
+
+        // 3. Sort
+        data = [...data].sort((a, b) => {
+            if (sortOrder === 'name-asc') return a.name.localeCompare(b.name);
+            if (sortOrder === 'name-desc') return b.name.localeCompare(a.name);
+            return 0;
+        });
+
+        return data;
+    }, [allIngredients, searchResult, selectedCategory, sortOrder]);
+
+    // Pagination Logic
+    const totalPages = Math.ceil(processedData.length / ITEMS_PER_PAGE);
+    const paginatedData = processedData.slice(
+        (currentPage - 1) * ITEMS_PER_PAGE,
+        currentPage * ITEMS_PER_PAGE
+    );
+
+    const handlePageChange = (page: number) => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setCurrentPage(page);
+    };
 
     return (
-        <section className="py-16 px-4 md:px-8 max-w-7xl mx-auto">
+        <section className="py-16 px-4 md:px-8 max-w-7xl mx-auto min-h-[600px]">
+            {/* Header Section */}
             <div className="text-center mb-12">
-                <h2 className="text-4xl font-bold text-[#3d1861] mb-4">{title}</h2>
+                <h2 className="text-4xl md:text-5xl font-extrabold text-[#3d1861] mb-4 tracking-tight">
+                    {title}
+                </h2>
                 {subtitle && (
-                    <p className="text-lg text-gray-600 max-w-2xl mx-auto">{subtitle}</p>
+                    <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto">
+                        {subtitle}
+                    </p>
                 )}
             </div>
 
-            <div className="mb-12 relative z-50">
-                <div className="flex justify-center mb-8">
-                    <SmartSearchBar onSearch={handleSearch} />
+            {/* Controls Section */}
+            <div className="mb-10 relative z-50 space-y-6">
+                <div className="flex justify-center w-full">
+                    <SmartSearchBar
+                        onSearch={handleSearch}
+                        initialData={allIngredients}
+                    />
                 </div>
 
-                {categories.length > 0 && (
-                    <div className="flex flex-wrap justify-center gap-3">
+                {/* Filters & Toggles */}
+                <div className="flex flex-col md:flex-row justify-between items-center gap-4 border-b border-slate-100 pb-6">
+                    {/* Categories */}
+                    <div className="flex flex-wrap justify-center md:justify-start gap-2">
                         <button
-                            onClick={() => setSelectedCategory('All')}
-                            className={`px-6 py-2 rounded-full transition-colors ${selectedCategory === 'All'
-                                    ? 'bg-[#6b2c91] text-white'
-                                    : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'
+                            onClick={() => { setSelectedCategory('All'); setCurrentPage(1); }}
+                            className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${selectedCategory === 'All'
+                                    ? 'bg-[#6b2c91] text-white shadow-md'
+                                    : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
                                 }`}
                         >
                             All
@@ -71,25 +108,50 @@ export function IngredientsExplorer({ title, subtitle, categories }: Ingredients
                         {categories.map((cat) => (
                             <button
                                 key={cat}
-                                onClick={() => setSelectedCategory(cat)}
-                                className={`px-6 py-2 rounded-full transition-colors ${selectedCategory === cat
-                                        ? 'bg-[#6b2c91] text-white'
-                                        : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'
+                                onClick={() => { setSelectedCategory(cat); setCurrentPage(1); }}
+                                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${selectedCategory === cat
+                                        ? 'bg-[#6b2c91] text-white shadow-md'
+                                        : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
                                     }`}
                             >
                                 {cat}
                             </button>
                         ))}
                     </div>
-                )}
+
+                    {/* Sorting */}
+                    <div className="flex items-center gap-3">
+                        <span className="text-sm text-slate-400 font-medium flex items-center gap-1">
+                            <SlidersHorizontal size={14} /> Sort:
+                        </span>
+                        <div className="flex bg-slate-100 rounded-lg p-1">
+                            <button
+                                onClick={() => setSortOrder('name-asc')}
+                                className={`p-1.5 rounded-md transition-all ${sortOrder === 'name-asc' ? 'bg-white shadow text-[#6b2c91]' : 'text-slate-500 hover:text-[#6b2c91]'
+                                    }`}
+                                title="A-Z"
+                            >
+                                <ArrowDownAZ size={18} />
+                            </button>
+                            <button
+                                onClick={() => setSortOrder('name-desc')}
+                                className={`p-1.5 rounded-md transition-all ${sortOrder === 'name-desc' ? 'bg-white shadow text-[#6b2c91]' : 'text-slate-500 hover:text-[#6b2c91]'
+                                    }`}
+                                title="Z-A"
+                            >
+                                <ArrowUpAZ size={18} />
+                            </button>
+                        </div>
+                    </div>
+                </div>
 
                 {/* Intent/Active Filter Chips */}
                 {activeIntent && (
-                    <div className="flex justify-center mt-4 animate-in slide-in-from-top-2">
+                    <div className="flex justify-center animate-in slide-in-from-top-2">
                         <div className="bg-[#f8f5fa] text-[#6b2c91] px-4 py-2 rounded-full flex items-center gap-2 text-sm font-bold border border-[#e9d8fd]">
                             <span>✨ Active Mode: {activeIntent.label}</span>
                             <button
-                                onClick={() => setActiveIntent(null)}
+                                onClick={() => { setActiveIntent(null); setSearchResult(null); }} // Clear intent also clears specific search? Or just intent? Usually tightly coupled.
                                 className="hover:bg-[#e9d8fd] rounded-full p-0.5"
                             >
                                 ✕
@@ -99,33 +161,69 @@ export function IngredientsExplorer({ title, subtitle, categories }: Ingredients
                 )}
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {!hasSearched && displayedItems.length === 0 ? (
-                    // Initial Load State - we might want to fetch initial data here if SmartSearch doesn't fire immediately
-                    // For now, SmartSearch fires "onSearch" with all items when initialized or query cleared?
-                    // We need to ensure SmartSearch calls onSearch with initial data.
-                    <div className="col-span-full text-center text-gray-400 py-12">
-                        <p>Start typing to search ingredients...</p>
+            {/* Results Grid */}
+            <div className="min-h-[300px]">
+                {loading ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-pulse">
+                        {[1, 2, 3, 4, 5, 6].map((i) => (
+                            <div key={i} className="h-64 bg-slate-100 rounded-2xl"></div>
+                        ))}
                     </div>
-                ) : filteredItems.length === 0 ? (
-                    <div className="col-span-full text-center py-12">
-                        <p className="text-xl text-gray-500 mb-4">No ingredients found matching your criteria.</p>
-                        <button className="text-[#6b2c91] font-bold hover:underline">
-                            Request an ingredient check
+                ) : paginatedData.length === 0 ? (
+                    <div className="flex flex-col items-center justify-center py-20 text-center">
+                        <div className="bg-slate-50 p-6 rounded-full mb-4">
+                            <SlidersHorizontal size={32} className="text-slate-300" />
+                        </div>
+                        <h3 className="text-xl font-bold text-slate-700 mb-2">No ingredients found</h3>
+                        <p className="text-slate-500 max-w-md">
+                            We couldn't find any ingredients matching your current filters. Try adjusting your search or categories.
+                        </p>
+                        <button
+                            onClick={() => { setSelectedCategory('All'); setSearchResult(null); }}
+                            className="mt-6 text-[#6b2c91] font-bold hover:underline"
+                        >
+                            Clear all filters
                         </button>
                     </div>
                 ) : (
-                    filteredItems.map((item: any) => (
-                        <IngredientCard
-                            key={item.id}
-                            name={item.name}
-                            description={item.description}
-                            slug={item.slug || item.id}
-                            status={item.safety_status || 'unknown'}
-                        />
-                    ))
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-in fade-in duration-500">
+                        {paginatedData.map((item: any) => (
+                            <IngredientCard
+                                key={item.id}
+                                name={item.name}
+                                description={item.description}
+                                slug={item.slug || item.id}
+                                status={item.safety_status || 'unknown'}
+                            />
+                        ))}
+                    </div>
                 )}
             </div>
+
+            {/* Pagination Controls */}
+            {totalPages > 1 && (
+                <div className="flex justify-center items-center gap-4 mt-12">
+                    <button
+                        onClick={() => handlePageChange(currentPage - 1)}
+                        disabled={currentPage === 1}
+                        className="p-2 rounded-full border border-slate-200 text-slate-600 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    >
+                        <ChevronLeft size={20} />
+                    </button>
+
+                    <span className="text-sm font-medium text-slate-600">
+                        Page {currentPage} of {totalPages}
+                    </span>
+
+                    <button
+                        onClick={() => handlePageChange(currentPage + 1)}
+                        disabled={currentPage === totalPages}
+                        className="p-2 rounded-full border border-slate-200 text-slate-600 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    >
+                        <ChevronRight size={20} />
+                    </button>
+                </div>
+            )}
         </section>
     );
 }

@@ -15,17 +15,14 @@ export function SmartSearchBar({ onSearch, initialData = [] }: SmartSearchBarPro
     const [isOpen, setIsOpen] = useState(false);
     const [response, setResponse] = useState<SmartSearchResponse | null>(null);
 
-    // fetch all ingredients to index client-side for "Instant" feel
-    // in a real large app we might debounce and search server-side, 
-    // but for <1000 params client side fuse is faster and better UX.
-    const { data: serverData } = useSupabaseData('ingredients');
+    // Use initialData from parent to avoid double fetching
     const [indexedData, setIndexedData] = useState<any[]>([]);
 
     useEffect(() => {
-        if (serverData?.length) {
-            setIndexedData(prepareSearchIndex(serverData));
+        if (initialData?.length) {
+            setIndexedData(prepareSearchIndex(initialData));
         }
-    }, [serverData]);
+    }, [initialData]);
 
     const wrapperRef = useRef<HTMLDivElement>(null);
 
@@ -52,7 +49,8 @@ export function SmartSearchBar({ onSearch, initialData = [] }: SmartSearchBarPro
         } else {
             setIsOpen(false);
             setResponse(null);
-            onSearch(indexedData, null); // Reset to all
+            // If query cleared, we pass null to indicate "no search active" (parent falls back to full list)
+            onSearch(indexedData, null);
         }
     };
 
