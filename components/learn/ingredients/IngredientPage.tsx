@@ -116,10 +116,135 @@ export const IngredientPage = ({ blok }: { blok: any }) => {
                             </div>
                         </section>
                     )}
+
+                    {/* Safety Profile Grid */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {/* Scores */}
+                        <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                            <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-500">
+                                Safety Scores
+                            </h3>
+                            <div className="space-y-3">
+                                {blok.ewg_score && (
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-slate-600 font-medium">EWG Score</span>
+                                        <span className={`px-3 py-1 rounded-full font-bold text-sm ${blok.ewg_score <= 2 ? 'bg-green-100 text-green-700' :
+                                            blok.ewg_score <= 6 ? 'bg-yellow-100 text-yellow-700' : 'bg-red-100 text-red-700'
+                                            }`}>
+                                            {blok.ewg_score}/10
+                                        </span>
+                                    </div>
+                                )}
+                                {blok.comedogenicity && (
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-slate-600 font-medium">Comedogenicity</span>
+                                        <div className="flex items-center gap-2">
+                                            <div className="h-2 w-24 bg-slate-100 rounded-full overflow-hidden">
+                                                <div
+                                                    className="h-full bg-peach-500 rounded-full"
+                                                    style={{ width: `${(blok.comedogenicity / 5) * 100}%` }}
+                                                />
+                                            </div>
+                                            <span className="text-sm font-bold text-slate-700">{blok.comedogenicity}/5</span>
+                                        </div>
+                                    </div>
+                                )}
+                                {blok.irritation_potential && (
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-slate-600 font-medium">Irritation Potential</span>
+                                        <span className="text-sm font-bold text-slate-700 capitalize">{blok.irritation_potential}</span>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
+                        {/* Flags */}
+                        <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                            <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-500">
+                                Properties
+                            </h3>
+                            <div className="flex flex-wrap gap-2">
+                                {blok.fragrance_flag && (
+                                    <span className="px-3 py-1.5 bg-pink-50 text-pink-700 rounded-lg text-sm font-medium border border-pink-100 flex items-center gap-1">
+                                        🌸 Fragrance
+                                    </span>
+                                )}
+                                {blok.allergen_flag && (
+                                    <span className="px-3 py-1.5 bg-red-50 text-red-700 rounded-lg text-sm font-medium border border-red-100 flex items-center gap-1">
+                                        ⚠️ Allergen
+                                    </span>
+                                )}
+                                {blok.sensitiser_flag && (
+                                    <span className="px-3 py-1.5 bg-orange-50 text-orange-700 rounded-lg text-sm font-medium border border-orange-100 flex items-center gap-1">
+                                        🔥 Sensitizer
+                                    </span>
+                                )}
+                                {blok.hormonal_concern_flag && (
+                                    <span className="px-3 py-1.5 bg-purple-50 text-purple-700 rounded-lg text-sm font-medium border border-purple-100 flex items-center gap-1">
+                                        🧬 Hormonal Concern
+                                    </span>
+                                )}
+                                {blok.pregnancy_safe !== null && (
+                                    <span className={`px-3 py-1.5 rounded-lg text-sm font-medium border flex items-center gap-1 ${blok.pregnancy_safe ? 'bg-green-50 text-green-700 border-green-100' : 'bg-red-50 text-red-700 border-red-100'
+                                        }`}>
+                                        {blok.pregnancy_safe ? '🤰 Pregnancy Safe' : '🚫 Not Pregnancy Safe'}
+                                    </span>
+                                )}
+                                {!blok.fragrance_flag && !blok.allergen_flag && !blok.sensitiser_flag && !blok.hormonal_concern_flag && blok.pregnancy_safe === null && (
+                                    <span className="text-slate-400 text-sm italic">No specific flags found.</span>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* AI Insights & Usage */}
+                    <section className="space-y-6">
+                        {blok.ai_parent_explanation && (
+                            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-2xl border border-blue-100">
+                                <h3 className="text-lg font-bold text-blue-900 mb-2">🎓 Complete Parent Guide</h3>
+                                <p className="text-blue-800 leading-relaxed">{blok.ai_parent_explanation}</p>
+                            </div>
+                        )}
+
+                        {blok.usage_tip && (
+                            <div className="bg-yellow-50 p-6 rounded-2xl border border-yellow-100 flex items-start gap-3">
+                                <span className="text-2xl">💡</span>
+                                <div>
+                                    <h3 className="font-bold text-yellow-900 mb-1">Usage Tip</h3>
+                                    <p className="text-yellow-800 text-sm">{blok.usage_tip}</p>
+                                </div>
+                            </div>
+                        )}
+                    </section>
                 </div>
 
                 {/* Right Column: Sidebar */}
                 <div className="md:col-span-4 space-y-8">
+                    {/* Identity Card */}
+                    <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-lg shadow-slate-100">
+                        <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-500 mb-4 border-b pb-2">
+                            Ingredient Identity
+                        </h3>
+                        <dl className="space-y-4">
+                            <div>
+                                <dt className="text-xs text-slate-400 uppercase">Chemical Family</dt>
+                                <dd className="text-slate-800 font-medium">{blok.family || 'Unclassified'}</dd>
+                            </div>
+                            {blok.aliases && (
+                                <div>
+                                    <dt className="text-xs text-slate-400 uppercase">Also Known As</dt>
+                                    <dd className="text-slate-600 text-sm italic leading-snug mt-1">
+                                        {Array.isArray(blok.aliases) ? blok.aliases.join(', ') : blok.aliases}
+                                    </dd>
+                                </div>
+                            )}
+                            <div>
+                                <dt className="text-xs text-slate-400 uppercase">INCI Name</dt>
+                                <dd className="text-slate-800 font-medium text-sm">{blok.inci_name || 'N/A'}</dd>
+                            </div>
+                        </dl>
+                    </div>
+
                     <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100">
                         <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-500 mb-4">
                             Commonly Found In
@@ -159,10 +284,26 @@ export const IngredientPage = ({ blok }: { blok: any }) => {
                                         <dd className="text-slate-700 font-mono text-sm">{blok.cas_number}</dd>
                                     </div>
                                 )}
-                                {blok.chemical_description && (
+                                {blok.ec_number && (
                                     <div>
-                                        <dt className="text-xs text-slate-400 uppercase">Chemical Description</dt>
-                                        <dd className="text-slate-700 text-sm">{blok.chemical_description}</dd>
+                                        <dt className="text-xs text-slate-400 uppercase">EC Number</dt>
+                                        <dd className="text-slate-700 font-mono text-sm">{blok.ec_number}</dd>
+                                    </div>
+                                )}
+                                {blok.age_min_recommended && (
+                                    <div>
+                                        <dt className="text-xs text-slate-400 uppercase">Rec. Min Age</dt>
+                                        <dd className="text-slate-700 font-bold text-sm bg-slate-100 inline-block px-2 py-1 rounded">
+                                            {blok.age_min_recommended}+ Years
+                                        </dd>
+                                    </div>
+                                )}
+                                {blok.restriction && (
+                                    <div>
+                                        <dt className="text-xs text-red-400 uppercase">Restrictions</dt>
+                                        <dd className="text-red-600 text-xs font-medium bg-red-50 p-2 rounded mt-1">
+                                            {blok.restriction}
+                                        </dd>
                                     </div>
                                 )}
                             </dl>

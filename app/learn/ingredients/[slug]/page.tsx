@@ -71,8 +71,33 @@ function renderIngredient(ingredients: any) {
         benefits: ingredients.ai_benefits,
         concerns: ingredients.ai_concerns || ingredients.concerns,
         fun_fact: ingredients.ai_fun_fact,
+
+        // Identity & Tech Specs
+        family: ingredients.family,
+        aliases: ingredients.aliases,
         cas_number: ingredients.cas_number,
+        ec_number: ingredients.ec_number,
         chemical_description: ingredients.chemical_description,
+        inci_name: ingredients.inci_name,
+
+        // Scoring & Safety
+        ewg_score: ingredients.ewg_score,
+        comedogenicity: ingredients.comedogenicity,
+        irritation_potential: ingredients.irritation_potential,
+        age_min_recommended: ingredients.age_min_recommended,
+        restriction: ingredients.restriction,
+
+        // Flags
+        fragrance_flag: ingredients.fragrance_flag,
+        allergen_flag: ingredients.allergen_flag,
+        sensitiser_flag: ingredients.sensitiser_flag,
+        hormonal_concern_flag: ingredients.hormonal_concern_flag,
+        pregnancy_safe: ingredients.pregnancy_safe,
+
+        // AI Extras
+        ai_parent_explanation: ingredients.ai_parent_explanation,
+        usage_tip: ingredients.ai_usage_tip,
+
         product_types: ingredients.product_types
             ? ingredients.product_types.split(',').map((t: string) => ({ text: t.trim() }))
             : []
