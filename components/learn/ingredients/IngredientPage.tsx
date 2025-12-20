@@ -92,6 +92,30 @@ export const IngredientPage = ({ blok }: { blok: any }) => {
                             {blok.kids_skin}
                         </p>
                     </section>
+
+                    {/* AI Benefits */}
+                    {blok.benefits && (
+                        <section className="space-y-4">
+                            <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
+                                <span className="text-green-500">✓</span> Benefits
+                            </h2>
+                            <div className="prose prose-lg text-slate-600">
+                                <p>{blok.benefits}</p>
+                            </div>
+                        </section>
+                    )}
+
+                    {/* AI Concerns/Considerations */}
+                    {blok.concerns && (
+                        <section className="space-y-4">
+                            <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
+                                <span className="text-orange-500">!</span> Things to Know
+                            </h2>
+                            <div className="prose prose-lg text-slate-600">
+                                <p>{blok.concerns}</p>
+                            </div>
+                        </section>
+                    )}
                 </div>
 
                 {/* Right Column: Sidebar */}
@@ -102,13 +126,48 @@ export const IngredientPage = ({ blok }: { blok: any }) => {
                         </h3>
                         <ul className="space-y-3">
                             {blok.product_types && blok.product_types.map((item: any, i: number) => (
-                                <li key={i} className="flex items-center gap-2 text-slate-700 font-medium">
-                                    <span className="w-1.5 h-1.5 rounded-full bg-peach-400" />
+                                <li key={i} className="flex items-center gap-2 text-slate-700 font-medium whitespace-normal break-words">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-peach-400 shrink-0" />
                                     {item.text}
                                 </li>
                             ))}
                         </ul>
                     </div>
+
+                    {/* AI Fun Fact */}
+                    {blok.fun_fact && (
+                        <div className="bg-purple-50 p-6 rounded-2xl border border-purple-100">
+                            <h3 className="text-sm font-semibold uppercase tracking-wider text-purple-600 mb-3 flex items-center gap-2">
+                                ✨ Fun Fact
+                            </h3>
+                            <p className="text-purple-900 text-sm leading-relaxed italic">
+                                "{blok.fun_fact}"
+                            </p>
+                        </div>
+                    )}
+
+                    {/* Technical Details */}
+                    {(blok.cas_number || blok.chemical_description) && (
+                        <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                            <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-500 mb-4">
+                                Technical Specs
+                            </h3>
+                            <dl className="space-y-4">
+                                {blok.cas_number && (
+                                    <div>
+                                        <dt className="text-xs text-slate-400 uppercase">CAS Number</dt>
+                                        <dd className="text-slate-700 font-mono text-sm">{blok.cas_number}</dd>
+                                    </div>
+                                )}
+                                {blok.chemical_description && (
+                                    <div>
+                                        <dt className="text-xs text-slate-400 uppercase">Chemical Description</dt>
+                                        <dd className="text-slate-700 text-sm">{blok.chemical_description}</dd>
+                                    </div>
+                                )}
+                            </dl>
+                        </div>
+                    )}
 
                     {/* Disclaimer */}
                     <div className="text-xs text-slate-400 italic leading-relaxed">

@@ -68,6 +68,11 @@ function renderIngredient(ingredients: any) {
         why_used: ingredients.why_we_use_it || ingredients.benefits || ingredients.ai_benefits || 'To improve the product.',
         kids_skin: ingredients.ai_kid_friendly_summary || ingredients.kid_friendly_summary || (ingredients.child_safe === false ? 'Not recommended for children.' : 'Safe for delicate skin.'),
         safety: safetyStatus,
+        benefits: ingredients.ai_benefits,
+        concerns: ingredients.ai_concerns || ingredients.concerns,
+        fun_fact: ingredients.ai_fun_fact,
+        cas_number: ingredients.cas_number,
+        chemical_description: ingredients.chemical_description,
         product_types: ingredients.product_types
             ? ingredients.product_types.split(',').map((t: string) => ({ text: t.trim() }))
             : []
