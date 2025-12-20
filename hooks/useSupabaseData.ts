@@ -8,19 +8,28 @@ export function useSupabaseData(tableName: string, searchTerm: string = '', cate
     const [error, setError] = useState<string | null>(null)
 
     useEffect(() => {
+        if (!supabase) {
+            console.error("Supabase client not initialized.");
+            // Don't set error visible to user unless critical? 
+            // Or set it so they know why it's empty.
+            // For build time, we want this to just pass silently if possible or handle gracefully.
+            // But for runtime without keys, it IS an error.
+            setError("Database configuration missing.");
+            setLoading(false);
+            return;
+        }
+
         async function fetchData() {
-            // If table name involves 'articles' which we couldn't find, we might skip or try anyway
             if (!tableName) return
+
+            // Re-check supabase exists for Typescript mostly, though the early return above handles it
+            if (!supabase) return;
 
             setLoading(true)
             try {
                 let query = supabase.from(tableName).select('*')
 
                 if (searchTerm) {
-                    // Assuming there is a text column to search, often 'title' or 'name'
-                    // We can try 'name' for ingredients/products and 'title' for articles?
-                    // For now, let's assume 'name' works for ingredients/products.
-                    // We might need to make this column configurable.
                     query = query.ilike('name', `%${searchTerm}%`)
                 }
 
