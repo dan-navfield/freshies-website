@@ -29,6 +29,19 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
+## Deployment & CMS Structure
+
+The `Learn` section is dynamically powered by Storyblok.
+- **Learn (Folder)**: `/learn`
+  - **Home**: `/learn` (Landing)
+  - **Ingredients**: `/learn/ingredients` (Powered by Supabase + Smart Search)
+  - **Products**: `/learn/products`
+  - **Guides**: `/learn/guides`
+
+When deploying to Vercel, ensure:
+1. `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` are set.
+2. `STORYBLOK_TOKEN` is set.
+
 ## Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
