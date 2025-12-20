@@ -105,8 +105,8 @@ function renderIngredient(ingredients: any) {
     }
 
     return (
-        <div className="bg-white min-h-screen pt-24 pb-12">
-            <div className="container mx-auto px-4 mb-8">
+        <div className="bg-white min-h-screen pt-8 pb-12">
+            <div className="container mx-auto px-4 mb-4">
                 <Link
                     href="/learn/ingredients"
                     className="inline-flex items-center text-slate-500 hover:text-slate-900 transition-colors"
