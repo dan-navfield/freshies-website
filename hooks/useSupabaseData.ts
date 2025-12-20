@@ -54,9 +54,11 @@ export function useSupabaseData(tableName: string, searchTerm: string = '', cate
                         // Also ensure category is displayable, defaulting to Uncategorized if unknown/null
                         category: (item.category && item.category !== 'unknown') ? item.category : 'Uncategorized',
                         // Fallback for description using kid-friendly summary or functional description
-                        description: item.description || item.kid_friendly_summary || item.what_it_does || 'No description available.',
+                        description: item.description || item.ai_kid_friendly_summary || item.kid_friendly_summary || item.what_it_does || 'No description available.',
                         // Map safety rating
-                        safety_status: item.safety_rating || 'unknown'
+                        safety_status: (item.safety_rating && item.safety_rating !== 'unknown')
+                            ? item.safety_rating
+                            : (item.child_safe === false ? 'avoid' : 'unknown')
                     };
                 })
 

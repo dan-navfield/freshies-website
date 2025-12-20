@@ -54,15 +54,20 @@ export default async function Page(props: { params: Promise<{ slug: string }> })
 }
 
 function renderIngredient(ingredients: any) {
+    // Determine safety status more robustly
+    const safetyStatus = (ingredients.safety_rating && ingredients.safety_rating !== 'unknown')
+        ? ingredients.safety_rating
+        : (ingredients.child_safe === false ? 'avoid' : 'unknown');
+
     const adaptedBlok = {
         _uid: ingredients.id,
         component: 'ingredient_page',
         name: ingredients.name || ingredients.common_name || 'Unknown Ingredient',
-        summary: ingredients.description || ingredients.kid_friendly_summary || 'No description available.',
-        what_is_it: ingredients.what_it_does,
-        why_used: ingredients.why_we_use_it || ingredients.benefits || 'To improve the product.',
-        kids_skin: ingredients.kid_friendly_summary || 'Safe for delicate skin.',
-        safety: ingredients.safety_rating || 'unknown',
+        summary: ingredients.description || ingredients.ai_kid_friendly_summary || ingredients.kid_friendly_summary || 'No description available.',
+        what_is_it: ingredients.what_it_does || ingredients.ai_what_it_does || 'Information coming soon.',
+        why_used: ingredients.why_we_use_it || ingredients.benefits || ingredients.ai_benefits || 'To improve the product.',
+        kids_skin: ingredients.ai_kid_friendly_summary || ingredients.kid_friendly_summary || (ingredients.child_safe === false ? 'Not recommended for children.' : 'Safe for delicate skin.'),
+        safety: safetyStatus,
         product_types: ingredients.product_types
             ? ingredients.product_types.split(',').map((t: string) => ({ text: t.trim() }))
             : []

@@ -19,25 +19,35 @@ if (!supabaseUrl || !supabaseAnonKey) {
 const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
 async function inspectData() {
-    console.log('Fetching first 10 ingredients...')
+    console.log('Fetching ingredient with Retinol in name/common_name/inci_name...')
     const { data, error } = await supabase
         .from('ingredients')
-        .select('name, slug, id, safety_rating, category')
-        .limit(10)
+        .select('*')
+        .or('name.ilike.%Retinol%,common_name.ilike.%Retinol%,inci_name.ilike.%Retinol%')
+        .limit(5)
 
     if (error) {
         console.error('Error:', error)
         return
     }
 
-    console.log('Sample Data:')
+    if (data.length === 0) {
+        console.log('No matches found for Retinol')
+        return
+    }
+
     data.forEach(i => {
-        console.log(`Name: ${i.name}`)
-        console.log(`Slug: ${i.slug}`)
-        console.log(`ID: ${i.id}`)
-        console.log(`Safety: ${i.safety_rating}`)
-        console.log(`Category: ${i.category}`)
-        console.log('---')
+        console.log(`--- Match (${i.id}) ---`)
+        console.log(`Name: '${i.name}'`)
+        console.log(`Common Name: '${i.common_name}'`)
+        console.log(`INCI Name: '${i.inci_name}'`)
+        console.log(`Safety Rating: ${i.safety_rating}`)
+        console.log(`Child Safe: ${i.child_safe}`)
+        console.log(`Kid Friendly Summary: '${i.kid_friendly_summary}'`)
+        console.log(`AI Kid Friendly Summary: '${i.ai_kid_friendly_summary}'`)
+        console.log(`Description: '${i.description}'`)
+        console.log(`What it does: '${i.what_it_does}'`)
+        console.log(`AI What it does: '${i.ai_what_it_does}'`)
     })
 }
 
