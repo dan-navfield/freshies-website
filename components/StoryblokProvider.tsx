@@ -52,6 +52,9 @@ import FeatureDeepDive from "@/components/home/concept2/FeatureDeepDive";
 import HowItWorks from "@/components/home/concept2/HowItWorks";
 import KidsJourney from "@/components/home/concept2/KidsJourney";
 import { SocialProof, TrustReassurance, FinalCta } from "@/components/home/concept2/SupportingSections";
+import IngredientsSupabaseBlock from "@/components/blocks/IngredientsSupabaseBlock";
+import ArticlesSupabaseBlock from "@/components/blocks/ArticlesSupabaseBlock";
+import ProductsSupabaseBlock from "@/components/blocks/ProductsSupabaseBlock";
 
 
 const components = {
@@ -111,6 +114,10 @@ const components = {
     social_proof: SocialProof,
     trust_reassurance: TrustReassurance,
     final_cta: FinalCta,
+    // Supabase Blocks
+    ingredients_list: IngredientsSupabaseBlock,
+    articles_list: ArticlesSupabaseBlock,
+    products_list: ProductsSupabaseBlock,
 };
 
 storyblokInit({
