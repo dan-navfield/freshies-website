@@ -15,6 +15,18 @@ const SafetyBadge = ({ status }: { status: string }) => {
             icon: AlertTriangle,
             label: "Use with Caution",
         },
+        avoid: {
+            bg: "bg-red-100",
+            text: "text-red-800",
+            icon: AlertTriangle,
+            label: "Avoid",
+        },
+        unsafe: {
+            bg: "bg-red-100",
+            text: "text-red-800",
+            icon: AlertTriangle,
+            label: "Unsafe",
+        },
         depends: {
             bg: "bg-yellow-100",
             text: "text-yellow-800",
@@ -125,6 +137,23 @@ export const IngredientPage = ({ blok }: { blok: any }) => {
                                 Safety Scores
                             </h3>
                             <div className="space-y-3">
+                                {blok.isi_score && (
+                                    <div className="flex flex-col gap-1 pb-3 border-b border-slate-100">
+                                        <div className="flex items-center justify-between">
+                                            <span className="text-slate-800 font-bold text-lg">ISI Score</span>
+                                            <span className="text-3xl font-extrabold text-slate-900">{blok.isi_score}<span className="text-base text-slate-400 font-normal">/100</span></span>
+                                        </div>
+                                        <div className="h-3 w-full bg-slate-100 rounded-full overflow-hidden">
+                                            <div
+                                                className={`h-full rounded-full ${blok.isi_score >= 80 ? 'bg-green-500' :
+                                                        blok.isi_score >= 50 ? 'bg-yellow-500' : 'bg-red-500'
+                                                    }`}
+                                                style={{ width: `${blok.isi_score}%` }}
+                                            />
+                                        </div>
+                                        <p className="text-xs text-slate-400 mt-1">Ingredient Safety Index</p>
+                                    </div>
+                                )}
                                 {blok.ewg_score && (
                                     <div className="flex items-center justify-between">
                                         <span className="text-slate-600 font-medium">EWG Score</span>

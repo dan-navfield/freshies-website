@@ -81,6 +81,7 @@ function renderIngredient(ingredients: any) {
         inci_name: ingredients.inci_name,
 
         // Scoring & Safety
+        isi_score: ingredients.isi_score,
         ewg_score: ingredients.ewg_score,
         comedogenicity: ingredients.comedogenicity,
         irritation_potential: ingredients.irritation_potential,
