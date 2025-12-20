@@ -26,9 +26,6 @@ export function IngredientsExplorer({ title, subtitle, categories }: Ingredients
 
     // Handle Smart Search updates
     const handleSearch = (results: any[], intent: any) => {
-        // If results equals full data length (and no query active), treat as "no search"
-        // But SmartSearch usually filters.
-        // If SmartSearch returns "all" because query is empty, we handle that.
         setSearchResult(results);
         setActiveIntent(intent);
         setCurrentPage(1); // Reset page on search
@@ -42,8 +39,6 @@ export function IngredientsExplorer({ title, subtitle, categories }: Ingredients
         // 2. Filter by Category
         if (selectedCategory !== 'All') {
             data = data.filter((item: any) => {
-                // Handle comma-separated categories or arrays if needed, currently string match
-                // Our mock data has single category strings.
                 return item.category === selectedCategory;
             });
         }
@@ -81,10 +76,10 @@ export function IngredientsExplorer({ title, subtitle, categories }: Ingredients
     }
 
     return (
-        <section className="py-16 px-4 md:px-8 max-w-7xl mx-auto min-h-[600px]">
+        <section className="py-8 px-4 md:px-8 max-w-7xl mx-auto min-h-[600px]">
             {/* Header Section - Only render if title is provided */}
             {title && (
-                <div className="text-center mb-12">
+                <div className="text-center mb-8">
                     <h2 className="text-4xl md:text-5xl font-extrabold text-[#3d1861] mb-4 tracking-tight">
                         {title}
                     </h2>
@@ -96,90 +91,8 @@ export function IngredientsExplorer({ title, subtitle, categories }: Ingredients
                 </div>
             )}
 
-            {/* Discovery Section - Popular & Categories */}
-            <div className="mb-20 space-y-16">
-
-                {/* Popular Ingredients */}
-                <div className="space-y-6">
-                    <div className="flex items-center gap-3 mb-8">
-                        <div className="w-2 h-8 bg-[#3d1861] rounded-full" />
-                        <h3 className="text-2xl md:text-3xl font-bold text-[#3d1861]">Popular Ingredients</h3>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        {/* Display first 4 safe/common ingredients as 'popular' for now */}
-                        {allIngredients
-                            .filter(i => i.safety_rating === 'safe' || i.name === 'Aloe Vera' || i.name === 'Glycerin')
-                            .slice(0, 4)
-                            .map(ingredient => (
-                                <IngredientCard
-                                    key={ingredient.id}
-                                    name={ingredient.name}
-                                    description={ingredient.description}
-                                    slug={ingredient.slug}
-                                    status={ingredient.safety_status}
-                                />
-                            ))}
-                    </div>
-                </div>
-
-                {/* Browse by Category */}
-                <div className="space-y-6">
-                    <div className="flex items-center gap-3 mb-8">
-                        <div className="w-2 h-8 bg-mint-500 rounded-full" />
-                        <h3 className="text-2xl md:text-3xl font-bold text-[#3d1861]">Browse by Category</h3>
-                    </div>
-
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        {categories.map((cat, idx) => (
-                            <button
-                                key={idx}
-                                onClick={() => {
-                                    setSelectedCategory(cat);
-                                    // Scroll to search section
-                                    document.getElementById('search-grid')?.scrollIntoView({ behavior: 'smooth' });
-                                }}
-                                className={`
-                                    p-6 rounded-2xl text-left transition-all duration-300 group
-                                    ${selectedCategory === cat
-                                        ? 'bg-[#3d1861] text-white shadow-xl scale-[1.02]'
-                                        : 'bg-white border border-slate-100 hover:border-[#3d1861]/20 hover:shadow-lg hover:-translate-y-1'
-                                    }
-                                `}
-                            >
-                                <span className={`text-lg font-bold block mb-2 ${selectedCategory === cat ? 'text-mint-300' : 'text-[#3d1861]'}`}>
-                                    {cat}
-                                </span>
-                                <span className={`text-sm ${selectedCategory === cat ? 'text-white/80' : 'text-slate-500'}`}>
-                                    View ingredients →
-                                </span>
-                            </button>
-                        ))}
-                        <button
-                            onClick={() => {
-                                setSelectedCategory('All');
-                                document.getElementById('search-grid')?.scrollIntoView({ behavior: 'smooth' });
-                            }}
-                            className={`
-                                    p-6 rounded-2xl text-left transition-all duration-300 group
-                                    ${selectedCategory === 'All'
-                                    ? 'bg-[#3d1861] text-white shadow-xl scale-[1.02]'
-                                    : 'bg-slate-50 border border-slate-100 hover:border-[#3d1861]/20 hover:shadow-lg hover:-translate-y-1'
-                                }
-                                `}
-                        >
-                            <span className={`text-lg font-bold block mb-2 ${selectedCategory === 'All' ? 'text-mint-300' : 'text-[#3d1861]'}`}>
-                                View All
-                            </span>
-                            <span className={`text-sm ${selectedCategory === 'All' ? 'text-white/80' : 'text-slate-500'}`}>
-                                Complete list →
-                            </span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
             <div id="search-grid" className="scroll-mt-24">
-                {/* Controls Section */}
+                {/* Controls Section WITH Search Bar First */}
                 <div className="mb-10 relative z-50 space-y-6">
                     <div className="flex justify-center w-full">
                         <SmartSearchBar
@@ -188,9 +101,87 @@ export function IngredientsExplorer({ title, subtitle, categories }: Ingredients
                         />
                     </div>
 
+                    {/* Discovery Section - Popular & Categories (MOVED HERE) */}
+                    <div className="mb-12 space-y-12 pt-8">
+                        {/* Popular Ingredients */}
+                        <div className="space-y-6">
+                            <div className="flex items-center gap-3 mb-6">
+                                <div className="w-2 h-8 bg-[#3d1861] rounded-full" />
+                                <h3 className="text-2xl md:text-3xl font-bold text-[#3d1861]">Popular Ingredients</h3>
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                {/* Display first 4 safe/common ingredients as 'popular' for now */}
+                                {allIngredients
+                                    .filter(i => i.safety_rating === 'safe' || i.name === 'Aloe Vera' || i.name === 'Glycerin')
+                                    .slice(0, 4)
+                                    .map(ingredient => (
+                                        <IngredientCard
+                                            key={ingredient.id}
+                                            name={ingredient.name}
+                                            description={ingredient.description}
+                                            slug={ingredient.slug}
+                                            status={ingredient.safety_status}
+                                        />
+                                    ))}
+                            </div>
+                        </div>
+
+                        {/* Browse by Category */}
+                        <div className="space-y-6">
+                            <div className="flex items-center gap-3 mb-6">
+                                <div className="w-2 h-8 bg-mint-500 rounded-full" />
+                                <h3 className="text-2xl md:text-3xl font-bold text-[#3d1861]">Browse by Category</h3>
+                            </div>
+
+                            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                                {categories.map((cat, idx) => (
+                                    <button
+                                        key={idx}
+                                        onClick={() => {
+                                            setSelectedCategory(cat);
+                                        }}
+                                        className={`
+                                            p-6 rounded-2xl text-left transition-all duration-300 group
+                                            ${selectedCategory === cat
+                                                ? 'bg-[#3d1861] text-white shadow-xl scale-[1.02]'
+                                                : 'bg-white border border-slate-100 hover:border-[#3d1861]/20 hover:shadow-lg hover:-translate-y-1'
+                                            }
+                                        `}
+                                    >
+                                        <span className={`text-lg font-bold block mb-2 ${selectedCategory === cat ? 'text-mint-300' : 'text-[#3d1861]'}`}>
+                                            {cat}
+                                        </span>
+                                        <span className={`text-sm ${selectedCategory === cat ? 'text-white/80' : 'text-slate-500'}`}>
+                                            View ingredients →
+                                        </span>
+                                    </button>
+                                ))}
+                                <button
+                                    onClick={() => {
+                                        setSelectedCategory('All');
+                                    }}
+                                    className={`
+                                        p-6 rounded-2xl text-left transition-all duration-300 group
+                                        ${selectedCategory === 'All'
+                                            ? 'bg-[#3d1861] text-white shadow-xl scale-[1.02]'
+                                            : 'bg-slate-50 border border-slate-100 hover:border-[#3d1861]/20 hover:shadow-lg hover:-translate-y-1'
+                                        }
+                                    `}
+                                >
+                                    <span className={`text-lg font-bold block mb-2 ${selectedCategory === 'All' ? 'text-mint-300' : 'text-[#3d1861]'}`}>
+                                        View All
+                                    </span>
+                                    <span className={`text-sm ${selectedCategory === 'All' ? 'text-white/80' : 'text-slate-500'}`}>
+                                        Complete list →
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
                     {/* Filters & Toggles */}
                     <div className="flex flex-col md:flex-row justify-between items-center gap-4 border-b border-slate-100 pb-6">
-                        {/* Categories */}
+                        {/* Categories Filter (Small) */}
                         <div className="flex flex-wrap justify-center md:justify-start gap-2">
                             <button
                                 onClick={() => { setSelectedCategory('All'); setCurrentPage(1); }}
@@ -247,7 +238,7 @@ export function IngredientsExplorer({ title, subtitle, categories }: Ingredients
                             <div className="bg-[#f8f5fa] text-[#6b2c91] px-4 py-2 rounded-full flex items-center gap-2 text-sm font-bold border border-[#e9d8fd]">
                                 <span>✨ Active Mode: {activeIntent.label}</span>
                                 <button
-                                    onClick={() => { setActiveIntent(null); setSearchResult(null); }} // Clear intent also clears specific search? Or just intent? Usually tightly coupled.
+                                    onClick={() => { setActiveIntent(null); setSearchResult(null); }}
                                     className="hover:bg-[#e9d8fd] rounded-full p-0.5"
                                 >
                                     ✕

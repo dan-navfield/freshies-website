@@ -22,7 +22,7 @@ export default function HeroSection({ blok }: { blok: any }) {
         <section
             {...storyblokEditable(blok)}
             className={cn(
-                "relative overflow-hidden pt-32 pb-20 lg:pt-40 lg:pb-32",
+                "relative overflow-hidden pt-24 pb-12 lg:pt-32 lg:pb-20",
                 themeClasses
             )}
         >
