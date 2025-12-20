@@ -48,7 +48,11 @@ export function useSupabaseData(tableName: string, searchTerm: string = '', cate
                     ...item,
                     name: item.name || item.common_name || item.inci_name || 'Unknown Ingredient',
                     // Also ensure category is displayable, defaulting to Uncategorized if unknown/null
-                    category: (item.category && item.category !== 'unknown') ? item.category : 'Uncategorized'
+                    category: (item.category && item.category !== 'unknown') ? item.category : 'Uncategorized',
+                    // Fallback for description using kid-friendly summary or functional description
+                    description: item.description || item.kid_friendly_summary || item.what_it_does || 'No description available.',
+                    // Map safety rating
+                    safety_status: item.safety_rating || 'unknown'
                 }))
 
                 setData(normalizedData)
