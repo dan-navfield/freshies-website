@@ -96,147 +96,231 @@ export function IngredientsExplorer({ title, subtitle, categories }: Ingredients
                 </div>
             )}
 
-            {/* Controls Section */}
-            <div className="mb-10 relative z-50 space-y-6">
-                <div className="flex justify-center w-full">
-                    <SmartSearchBar
-                        onSearch={handleSearch}
-                        initialData={allIngredients}
-                    />
+            {/* Discovery Section - Popular & Categories */}
+            <div className="mb-20 space-y-16">
+
+                {/* Popular Ingredients */}
+                <div className="space-y-6">
+                    <div className="flex items-center gap-3 mb-8">
+                        <div className="w-2 h-8 bg-[#3d1861] rounded-full" />
+                        <h3 className="text-2xl md:text-3xl font-bold text-[#3d1861]">Popular Ingredients</h3>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        {/* Display first 4 safe/common ingredients as 'popular' for now */}
+                        {allIngredients
+                            .filter(i => i.safety_rating === 'safe' || i.name === 'Aloe Vera' || i.name === 'Glycerin')
+                            .slice(0, 4)
+                            .map(ingredient => (
+                                <IngredientCard
+                                    key={ingredient.id}
+                                    name={ingredient.name}
+                                    description={ingredient.description}
+                                    slug={ingredient.slug}
+                                    status={ingredient.safety_status}
+                                />
+                            ))}
+                    </div>
                 </div>
 
-                {/* Filters & Toggles */}
-                <div className="flex flex-col md:flex-row justify-between items-center gap-4 border-b border-slate-100 pb-6">
-                    {/* Categories */}
-                    <div className="flex flex-wrap justify-center md:justify-start gap-2">
-                        <button
-                            onClick={() => { setSelectedCategory('All'); setCurrentPage(1); }}
-                            className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${selectedCategory === 'All'
-                                ? 'bg-[#6b2c91] text-white shadow-md'
-                                : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
-                                }`}
-                        >
-                            All
-                        </button>
-                        {categories.map((cat) => (
+                {/* Browse by Category */}
+                <div className="space-y-6">
+                    <div className="flex items-center gap-3 mb-8">
+                        <div className="w-2 h-8 bg-mint-500 rounded-full" />
+                        <h3 className="text-2xl md:text-3xl font-bold text-[#3d1861]">Browse by Category</h3>
+                    </div>
+
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        {categories.map((cat, idx) => (
                             <button
-                                key={cat}
-                                onClick={() => { setSelectedCategory(cat); setCurrentPage(1); }}
-                                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${selectedCategory === cat
+                                key={idx}
+                                onClick={() => {
+                                    setSelectedCategory(cat);
+                                    // Scroll to search section
+                                    document.getElementById('search-grid')?.scrollIntoView({ behavior: 'smooth' });
+                                }}
+                                className={`
+                                    p-6 rounded-2xl text-left transition-all duration-300 group
+                                    ${selectedCategory === cat
+                                        ? 'bg-[#3d1861] text-white shadow-xl scale-[1.02]'
+                                        : 'bg-white border border-slate-100 hover:border-[#3d1861]/20 hover:shadow-lg hover:-translate-y-1'
+                                    }
+                                `}
+                            >
+                                <span className={`text-lg font-bold block mb-2 ${selectedCategory === cat ? 'text-mint-300' : 'text-[#3d1861]'}`}>
+                                    {cat}
+                                </span>
+                                <span className={`text-sm ${selectedCategory === cat ? 'text-white/80' : 'text-slate-500'}`}>
+                                    View ingredients →
+                                </span>
+                            </button>
+                        ))}
+                        <button
+                            onClick={() => {
+                                setSelectedCategory('All');
+                                document.getElementById('search-grid')?.scrollIntoView({ behavior: 'smooth' });
+                            }}
+                            className={`
+                                    p-6 rounded-2xl text-left transition-all duration-300 group
+                                    ${selectedCategory === 'All'
+                                    ? 'bg-[#3d1861] text-white shadow-xl scale-[1.02]'
+                                    : 'bg-slate-50 border border-slate-100 hover:border-[#3d1861]/20 hover:shadow-lg hover:-translate-y-1'
+                                }
+                                `}
+                        >
+                            <span className={`text-lg font-bold block mb-2 ${selectedCategory === 'All' ? 'text-mint-300' : 'text-[#3d1861]'}`}>
+                                View All
+                            </span>
+                            <span className={`text-sm ${selectedCategory === 'All' ? 'text-white/80' : 'text-slate-500'}`}>
+                                Complete list →
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="search-grid" className="scroll-mt-24">
+                {/* Controls Section */}
+                <div className="mb-10 relative z-50 space-y-6">
+                    <div className="flex justify-center w-full">
+                        <SmartSearchBar
+                            onSearch={handleSearch}
+                            initialData={allIngredients}
+                        />
+                    </div>
+
+                    {/* Filters & Toggles */}
+                    <div className="flex flex-col md:flex-row justify-between items-center gap-4 border-b border-slate-100 pb-6">
+                        {/* Categories */}
+                        <div className="flex flex-wrap justify-center md:justify-start gap-2">
+                            <button
+                                onClick={() => { setSelectedCategory('All'); setCurrentPage(1); }}
+                                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${selectedCategory === 'All'
                                     ? 'bg-[#6b2c91] text-white shadow-md'
                                     : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
                                     }`}
                             >
-                                {cat}
+                                All
                             </button>
-                        ))}
-                    </div>
+                            {categories.map((cat) => (
+                                <button
+                                    key={cat}
+                                    onClick={() => { setSelectedCategory(cat); setCurrentPage(1); }}
+                                    className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${selectedCategory === cat
+                                        ? 'bg-[#6b2c91] text-white shadow-md'
+                                        : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
+                                        }`}
+                                >
+                                    {cat}
+                                </button>
+                            ))}
+                        </div>
 
-                    {/* Sorting */}
-                    <div className="flex items-center gap-3">
-                        <span className="text-sm text-slate-400 font-medium flex items-center gap-1">
-                            <SlidersHorizontal size={14} /> Sort:
-                        </span>
-                        <div className="flex bg-slate-100 rounded-lg p-1">
-                            <button
-                                onClick={() => setSortOrder('name-asc')}
-                                className={`p-1.5 rounded-md transition-all ${sortOrder === 'name-asc' ? 'bg-white shadow text-[#6b2c91]' : 'text-slate-500 hover:text-[#6b2c91]'
-                                    }`}
-                                title="A-Z"
-                            >
-                                <ArrowDownAZ size={18} />
-                            </button>
-                            <button
-                                onClick={() => setSortOrder('name-desc')}
-                                className={`p-1.5 rounded-md transition-all ${sortOrder === 'name-desc' ? 'bg-white shadow text-[#6b2c91]' : 'text-slate-500 hover:text-[#6b2c91]'
-                                    }`}
-                                title="Z-A"
-                            >
-                                <ArrowUpAZ size={18} />
-                            </button>
+                        {/* Sorting */}
+                        <div className="flex items-center gap-3">
+                            <span className="text-sm text-slate-400 font-medium flex items-center gap-1">
+                                <SlidersHorizontal size={14} /> Sort:
+                            </span>
+                            <div className="flex bg-slate-100 rounded-lg p-1">
+                                <button
+                                    onClick={() => setSortOrder('name-asc')}
+                                    className={`p-1.5 rounded-md transition-all ${sortOrder === 'name-asc' ? 'bg-white shadow text-[#6b2c91]' : 'text-slate-500 hover:text-[#6b2c91]'
+                                        }`}
+                                    title="A-Z"
+                                >
+                                    <ArrowDownAZ size={18} />
+                                </button>
+                                <button
+                                    onClick={() => setSortOrder('name-desc')}
+                                    className={`p-1.5 rounded-md transition-all ${sortOrder === 'name-desc' ? 'bg-white shadow text-[#6b2c91]' : 'text-slate-500 hover:text-[#6b2c91]'
+                                        }`}
+                                    title="Z-A"
+                                >
+                                    <ArrowUpAZ size={18} />
+                                </button>
+                            </div>
                         </div>
                     </div>
+
+                    {/* Intent/Active Filter Chips */}
+                    {activeIntent && (
+                        <div className="flex justify-center animate-in slide-in-from-top-2">
+                            <div className="bg-[#f8f5fa] text-[#6b2c91] px-4 py-2 rounded-full flex items-center gap-2 text-sm font-bold border border-[#e9d8fd]">
+                                <span>✨ Active Mode: {activeIntent.label}</span>
+                                <button
+                                    onClick={() => { setActiveIntent(null); setSearchResult(null); }} // Clear intent also clears specific search? Or just intent? Usually tightly coupled.
+                                    className="hover:bg-[#e9d8fd] rounded-full p-0.5"
+                                >
+                                    ✕
+                                </button>
+                            </div>
+                        </div>
+                    )}
                 </div>
 
-                {/* Intent/Active Filter Chips */}
-                {activeIntent && (
-                    <div className="flex justify-center animate-in slide-in-from-top-2">
-                        <div className="bg-[#f8f5fa] text-[#6b2c91] px-4 py-2 rounded-full flex items-center gap-2 text-sm font-bold border border-[#e9d8fd]">
-                            <span>✨ Active Mode: {activeIntent.label}</span>
+                {/* Results Grid */}
+                <div className="min-h-[300px]">
+                    {loading ? (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-pulse">
+                            {[1, 2, 3, 4, 5, 6].map((i) => (
+                                <div key={i} className="h-64 bg-slate-100 rounded-2xl"></div>
+                            ))}
+                        </div>
+                    ) : paginatedData.length === 0 ? (
+                        <div className="flex flex-col items-center justify-center py-20 text-center">
+                            <div className="bg-slate-50 p-6 rounded-full mb-4">
+                                <SlidersHorizontal size={32} className="text-slate-300" />
+                            </div>
+                            <h3 className="text-xl font-bold text-slate-700 mb-2">No ingredients found</h3>
+                            <p className="text-slate-500 max-w-md">
+                                We couldn't find any ingredients matching your current filters. Try adjusting your search or categories.
+                            </p>
                             <button
-                                onClick={() => { setActiveIntent(null); setSearchResult(null); }} // Clear intent also clears specific search? Or just intent? Usually tightly coupled.
-                                className="hover:bg-[#e9d8fd] rounded-full p-0.5"
+                                onClick={() => { setSelectedCategory('All'); setSearchResult(null); }}
+                                className="mt-6 text-[#6b2c91] font-bold hover:underline"
                             >
-                                ✕
+                                Clear all filters
                             </button>
                         </div>
-                    </div>
-                )}
-            </div>
-
-            {/* Results Grid */}
-            <div className="min-h-[300px]">
-                {loading ? (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-pulse">
-                        {[1, 2, 3, 4, 5, 6].map((i) => (
-                            <div key={i} className="h-64 bg-slate-100 rounded-2xl"></div>
-                        ))}
-                    </div>
-                ) : paginatedData.length === 0 ? (
-                    <div className="flex flex-col items-center justify-center py-20 text-center">
-                        <div className="bg-slate-50 p-6 rounded-full mb-4">
-                            <SlidersHorizontal size={32} className="text-slate-300" />
+                    ) : (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-in fade-in duration-500">
+                            {paginatedData.map((item: any) => (
+                                <IngredientCard
+                                    key={item.id}
+                                    name={item.name}
+                                    description={item.description}
+                                    slug={item.slug || item.id}
+                                    status={item.safety_status || 'unknown'}
+                                />
+                            ))}
                         </div>
-                        <h3 className="text-xl font-bold text-slate-700 mb-2">No ingredients found</h3>
-                        <p className="text-slate-500 max-w-md">
-                            We couldn't find any ingredients matching your current filters. Try adjusting your search or categories.
-                        </p>
+                    )}
+                </div>
+
+                {/* Pagination Controls */}
+                {totalPages > 1 && (
+                    <div className="flex justify-center items-center gap-4 mt-12">
                         <button
-                            onClick={() => { setSelectedCategory('All'); setSearchResult(null); }}
-                            className="mt-6 text-[#6b2c91] font-bold hover:underline"
+                            onClick={() => handlePageChange(currentPage - 1)}
+                            disabled={currentPage === 1}
+                            className="p-2 rounded-full border border-slate-200 text-slate-600 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                         >
-                            Clear all filters
+                            <ChevronLeft size={20} />
+                        </button>
+
+                        <span className="text-sm font-medium text-slate-600">
+                            Page {currentPage} of {totalPages}
+                        </span>
+
+                        <button
+                            onClick={() => handlePageChange(currentPage + 1)}
+                            disabled={currentPage === totalPages}
+                            className="p-2 rounded-full border border-slate-200 text-slate-600 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                        >
+                            <ChevronRight size={20} />
                         </button>
                     </div>
-                ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-in fade-in duration-500">
-                        {paginatedData.map((item: any) => (
-                            <IngredientCard
-                                key={item.id}
-                                name={item.name}
-                                description={item.description}
-                                slug={item.slug || item.id}
-                                status={item.safety_status || 'unknown'}
-                            />
-                        ))}
-                    </div>
                 )}
             </div>
-
-            {/* Pagination Controls */}
-            {totalPages > 1 && (
-                <div className="flex justify-center items-center gap-4 mt-12">
-                    <button
-                        onClick={() => handlePageChange(currentPage - 1)}
-                        disabled={currentPage === 1}
-                        className="p-2 rounded-full border border-slate-200 text-slate-600 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                    >
-                        <ChevronLeft size={20} />
-                    </button>
-
-                    <span className="text-sm font-medium text-slate-600">
-                        Page {currentPage} of {totalPages}
-                    </span>
-
-                    <button
-                        onClick={() => handlePageChange(currentPage + 1)}
-                        disabled={currentPage === totalPages}
-                        className="p-2 rounded-full border border-slate-200 text-slate-600 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                    >
-                        <ChevronRight size={20} />
-                    </button>
-                </div>
-            )}
         </section>
     );
 }

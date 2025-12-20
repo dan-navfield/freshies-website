@@ -32,7 +32,7 @@ export function IngredientCard({ name, description, slug, status = 'unknown' }: 
             </div>
             <p className="text-gray-600 mb-6 flex-grow">{description}</p>
             <Link
-                href={`/ingredients/${slug}`}
+                href={`/learn/ingredients/${slug}`}
                 className="inline-flex items-center text-[#3d1861] font-medium hover:underline mt-auto"
             >
                 Read profile <ArrowRight className="w-4 h-4 ml-1" />

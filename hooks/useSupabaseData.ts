@@ -44,16 +44,21 @@ export function useSupabaseData(tableName: string, searchTerm: string = '', cate
                 if (fetchError) throw fetchError
 
                 // Normalize data: ensure 'name' exists by falling back to common_name or inci_name
-                const normalizedData = (result || []).map(item => ({
-                    ...item,
-                    name: item.name || item.common_name || item.inci_name || 'Unknown Ingredient',
-                    // Also ensure category is displayable, defaulting to Uncategorized if unknown/null
-                    category: (item.category && item.category !== 'unknown') ? item.category : 'Uncategorized',
-                    // Fallback for description using kid-friendly summary or functional description
-                    description: item.description || item.kid_friendly_summary || item.what_it_does || 'No description available.',
-                    // Map safety rating
-                    safety_status: item.safety_rating || 'unknown'
-                }))
+                const normalizedData = (result || []).map(item => {
+                    const displayName = item.name || item.common_name || item.inci_name || 'Unknown Ingredient';
+                    return {
+                        ...item,
+                        name: displayName,
+                        // Generate a URL-friendly slug from the display name since DB slug doesn't exist
+                        slug: displayName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+                        // Also ensure category is displayable, defaulting to Uncategorized if unknown/null
+                        category: (item.category && item.category !== 'unknown') ? item.category : 'Uncategorized',
+                        // Fallback for description using kid-friendly summary or functional description
+                        description: item.description || item.kid_friendly_summary || item.what_it_does || 'No description available.',
+                        // Map safety rating
+                        safety_status: item.safety_rating || 'unknown'
+                    };
+                })
 
                 setData(normalizedData)
             } catch (err: any) {
